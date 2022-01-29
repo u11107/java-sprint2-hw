@@ -1,24 +1,22 @@
-package ru.task.manager.Task;
+package ru.yandex.practicum.task;
 
-public class Task {
+
+
+public class Tasks {
     private int id;
     private String title;
     private String description;
-    private String status;
+    private StatusTasks.Status status;
+// конструктор обьекта
 
 
-    public Task(int id, String title, String description, String status) {
+    public Tasks(int id, String title, String description, StatusTasks.Status status) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.status = status;
+        this.status = StatusTasks.Status.NEW;
     }
 
-    public Task(int id, String title, String description) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-    }
 
     public int getId() {
         return id;
@@ -26,6 +24,7 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
+
     }
 
     public String getTitle() {
@@ -44,17 +43,17 @@ public class Task {
         this.description = description;
     }
 
-    public String getStatus() {
+    public StatusTasks.Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusTasks.Status status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "Tasks{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
