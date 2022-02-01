@@ -1,33 +1,38 @@
-import ru.yandex.practicum.task.Tasks;
-
-import ru.yandex.practicum.task.StatusTasks;
-import ru.yandex.practicum.task.SubTasks;
-import ru.yandex.practicum.task.Tasks;
-import ru.yandex.practicum.task.Epic;
-import ru.yandex.practicum.manager.mangerMethods;
-import ru.yandex.practicum.manager.manager;
-
+import ru.yandex.practicum.manager.Manager;
+import ru.yandex.practicum.task.*;
 
 public class Main  {
+    static Manager manager = new Manager();
 
     public static void main(String[] args) {
 
-        int number = 1;
-        Tasks tes1 = new Tasks(number, "Помыть тарелки и вилки", "Купить тарелки и вилки", StatusTasks.Status.NEW);
-        System.out.println(tes1);
-        number++;
-        Tasks tes2 = new Tasks(number, "Тренировка", "Разбить ебло соседу", StatusTasks.Status.NEW);
-        number++;
-        Tasks tes3 = new Tasks(number, "Помыть тарелки и вилки", "ШОшаур", StatusTasks.Status.NEW);
-        number++;
-        Tasks tes4 = new Tasks(number, "Помыть тарелки и вилки", "Вычистить все нахрен", StatusTasks.Status.NEW);
-        number++;
 
-        Tasks tes5 = new Tasks(number, "Помыть тарелки и вилки", "Вычистить все нахрен", StatusTasks.Status.NEW);
-        System.out.println(tes2);
-        System.out.println(tes3);
-        System.out.println(tes4);
-        System.out.println(tes5);
+
+        Tasks tes1 = new Tasks(manager.generateId(),"Помыть 11тарелки и вилки", "Купить тарелки и вилки", Status.IN_PROGRESS);
+        manager.addTask(tes1);
+        Tasks tes2 = new Tasks(manager.generateId(),"Помыть тарелки и вилки", "Купить 123тарелки и вилки", Status.NEW);
+        manager.addTask(tes2);
+        manager.addTask(tes1);
+        printAll();
+        manager.removeTaskId(1);
+        manager.updateTask(new Tasks(2,"jhbdsfjksd", "ihwefiwef", Status.NEW));
+        printAll();
+
+
+        Epic ep4 = new Epic(manager.generateId(), "Помыть1", "выкинуть");
+        Epic ep3 = new Epic(manager.generateId(), "Помыть", "выкинуть");
+        manager.addEpic(ep3);
+        manager.addEpic(ep4);
+        printAll();
+
+        SubTasks ep1 = new SubTasks(manager.generateId(),"23Проснуться", "Встать",3);
+        manager.addSubtask(ep1);
+        printAll();
+
+        manager.removeEpicId(3);
+        printAll();
+
+
 
 
 
@@ -36,5 +41,10 @@ public class Main  {
 
     }
 
-}
+    static void printAll(){
+        System.out.println(manager.getAllTasks());
+        System.out.println(manager.getAllEpics());
+        System.out.println(manager.getAllSubtasks());
+    }
 
+}

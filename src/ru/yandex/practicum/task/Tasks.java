@@ -6,16 +6,17 @@ public class Tasks {
     private int id;
     private String title;
     private String description;
-    private StatusTasks.Status status;
-// конструктор обьекта
+    private Status status;
 
 
-    public Tasks(int id, String title, String description, StatusTasks.Status status) {
+    public Tasks(int id, String title, String description, Status status) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.status = StatusTasks.Status.NEW;
+        this.status = status;
+
     }
+
 
 
     public int getId() {
@@ -43,11 +44,11 @@ public class Tasks {
         this.description = description;
     }
 
-    public StatusTasks.Status getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(StatusTasks.Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

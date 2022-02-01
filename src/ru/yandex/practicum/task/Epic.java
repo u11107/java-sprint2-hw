@@ -3,25 +3,31 @@ package ru.yandex.practicum.task;
 import java.util.ArrayList;
 
 public class Epic extends Tasks {
-    ArrayList<Integer> subTask;
+   private ArrayList<SubTasks> subTaskList;
 
-    public Epic(int id, String title, String description, StatusTasks.Status status) {
-        super(id, title, description, status);
-        this.subTask = new ArrayList<Integer>();
+
+    public Epic(int id, String title, String description) {
+        super(id, title, description, null);
+        this.subTaskList = new ArrayList<>();
+    }
+
+    public ArrayList<SubTasks> getSubTaskList() {
+        return subTaskList;
+    }
+
+    public void setSubTaskList(ArrayList<SubTasks> subTaskList) {
+        this.subTaskList = subTaskList;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Epic epic = (Epic) o;
-
-        return subTask.equals(epic.subTask);
+    public String toString() {
+        return "Epic{" +
+                "id=" + this.getId() +
+                ", title='" + this.getTitle() + '\'' +
+                ", description='" + this.getDescription() + '\'' +
+                ", status=" + this.getStatus() +
+                '}';
     }
 
-    @Override
-    public int hashCode() {
-        return subTask.hashCode();
-    }
+
 }
