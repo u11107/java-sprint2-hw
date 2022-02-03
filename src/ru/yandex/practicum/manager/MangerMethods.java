@@ -9,40 +9,47 @@ import java.util.Collection;
 
 public interface MangerMethods  {
 
-// создание нового tasks
-    void addTask(Tasks tasks);
-// вывод всех tasks
+    // создание нового tasks
+    void createTasks(Tasks tasks);
+    // вывод всех tasks
     ArrayList<Tasks> getAllTasks();
-// получение tasks по id
-    Tasks gettingById(int id);
-// удаление всех task,epic, subtask
+    // получение tasks по id
+    Tasks gettingById(Integer id);
+    // удаление всех task,epic, subtask
     void clearTask();
-//удаление Task по идентефикатору
-    void removeTaskId(int id);
-// обновление списка Task
+    //удаление Task по идентефикатору
+    void removeTaskId(Integer id);
+    // обновление списка Task
     void updateTask(Tasks task);
 
-// создание нового epic
-    void addEpic(Epic epic);
-// вывод всех epic
+    // создание нового epic
+    void createEpics(Epic epic);
+    // вывод всех epic
     ArrayList<Epic> getAllEpics();
-// обновление epic
+    // обновление epic
     void updateEpic(Epic epic);
-// удаление epic по id
-    void removeEpicId(int id);
-// получение epic по id
-    Epic gettingByEpicId(int id);
+    // удаление epic по id
+    void removeEpicId(Integer id);
+    // получение epic по id
+    Epic gettingByEpicId(Integer id);
+    //Удаление всех epic
+    void clearEpic();
 
-// создание subTask
-    void addSubtask(SubTasks subTasks);
-// удаление subtask
+    // создание subTask
+    void createSubtask(SubTasks subTask);
+    // удаление subtask
     void clearSubTask();
-// вывод всех subtask
+    // вывод всех subtask
     ArrayList<SubTasks> getAllSubtasks();
-//получение subTask по id
-    SubTasks gettingBySubTaskId(int id);
-//Удаление subTask по id
-    void removeSubTaskId(int id);
+    //получение subTask по id
+    SubTasks gettingBySubTaskId(Integer id);
+    //Удаление subTask по id
+    void removeSubTaskId(Integer id);
+    //добавленеи subtask  в epic
+    void addSubTaskEpic(SubTasks subTask);
+
+    //обновление subtask
+    void updateStatus(SubTasks status);
 
 
 
