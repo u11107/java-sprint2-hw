@@ -3,13 +3,13 @@ package ru.yandex.practicum.task;
 
 
 public class Tasks {
-    private int id;
+    private Integer id;
     private String title;
     private String description;
     private Status status;
 
 
-    public Tasks(int id, String title, String description, Status status) {
+    public Tasks(Integer id, String title, String description, Status status) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -17,15 +17,18 @@ public class Tasks {
 
     }
 
+    public Tasks(String title, String description, Status status) {
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
 
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-
     }
 
     public String getTitle() {
@@ -61,4 +64,6 @@ public class Tasks {
                 ", status=" + status +
                 '}';
     }
+
+
 }

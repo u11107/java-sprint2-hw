@@ -1,18 +1,21 @@
 package ru.yandex.practicum.task;
 
+
+
 public class SubTasks extends Tasks {
     private Integer idFromEpic;
 
-    public SubTasks(int id, String title, String description, int idFromEpic) {
-        super(id, title, description, null);
+    public SubTasks(Integer id, String title, String description, Status status,Integer idFromEpic) {
+        super(id, title, description, status);
         this.idFromEpic = idFromEpic;
     }
 
-    public int getIdFromEpic() {
+
+    public Integer getIdFromEpic() {
         return idFromEpic;
     }
 
-    public void setIdFromEpic(int idFromEpic) {
+    public void setIdFromEpic(Integer idFromEpic) {
         this.idFromEpic = idFromEpic;
     }
 
@@ -34,11 +37,11 @@ public class SubTasks extends Tasks {
 
         SubTasks subTasks = (SubTasks) o;
 
-        return idFromEpic == subTasks.idFromEpic;
+        return idFromEpic.equals(subTasks.idFromEpic);
     }
 
     @Override
     public int hashCode() {
-        return idFromEpic;
+        return idFromEpic.hashCode();
     }
 }
