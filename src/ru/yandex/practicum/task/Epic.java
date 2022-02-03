@@ -29,5 +29,18 @@ public class Epic extends Tasks {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Epic epic = (Epic) o;
+
+        return subTaskList.equals(epic.subTaskList);
+    }
+
+    @Override
+    public int hashCode() {
+        return subTaskList.hashCode();
+    }
 }

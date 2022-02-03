@@ -4,7 +4,7 @@ import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Tasks;
 
 import java.util.ArrayList;
-import java.util.Collection;
+
 
 
 public interface MangerMethods  {
@@ -16,7 +16,7 @@ public interface MangerMethods  {
     // получение tasks по id
     Tasks gettingById(Integer id);
     // удаление всех task,epic, subtask
-    void clearTask();
+    void clearAll();
     //удаление Task по идентефикатору
     void removeTaskId(Integer id);
     // обновление списка Task
@@ -49,9 +49,5 @@ public interface MangerMethods  {
     void addSubTaskEpic(SubTasks subTask);
     //обновление subtask
     void updateStatus(SubTasks status);
-
-
-
-
 
 }
