@@ -47,7 +47,6 @@ public interface MangerMethods  {
     void removeSubTaskId(Integer id);
     //добавленеи subtask  в epic
     void addSubTaskEpic(SubTasks subTask);
-
     //обновление subtask
     void updateStatus(SubTasks status);
 

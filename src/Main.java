@@ -8,7 +8,7 @@ public class Main  {
 
 
 
-        Tasks tes1 = new Tasks(manager.generateId(),"Помыть 11тарелки и вилки", "Купить тарелки и вилки", Status.IN_PROGRESS);
+        /*Tasks tes1 = new Tasks(manager.generateId(),"Помыть 11тарелки и вилки", "Купить тарелки и вилки", Status.IN_PROGRESS);
         manager.createTasks(tes1);
         Tasks tes2 = new Tasks(manager.generateId(),"Помыть тарелки и вилки", "Купить 123тарелки и вилки", Status.NEW);
         manager.createTasks(tes2);
@@ -23,11 +23,11 @@ public class Main  {
         Epic ep3 = new Epic(manager.generateId(), "Помыть", "выкинуть");
         manager.createEpics(ep3);
         manager.createEpics(ep4);
-        printAll();
+        printAll();*/
 
         SubTasks ep1 = new SubTasks(manager.generateId(),"23Проснуться", "Встать",Status.NEW,2323);
         manager.createSubtask(ep1);
-        manager.addSubTaskEpic(ep1);
+        //manager.addSubTaskEpic(ep1);
         printAll();
 
         manager.removeEpicId(3);
