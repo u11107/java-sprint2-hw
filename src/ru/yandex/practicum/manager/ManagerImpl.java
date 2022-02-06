@@ -209,7 +209,7 @@ public class ManagerImpl implements Manager {
         SubTasks s = subtask.remove(id);
         Epic epic = epics.get(s.getIdFromEpic());
         epic.getSubTaskList().remove(s);
-        System.out.println("Подзадачи удалены");
+        System.out.println("Подзадача удалена");
         updateStatus(epics.get(s.getIdFromEpic()));
     }
 

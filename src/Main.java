@@ -25,14 +25,16 @@ public class Main  {
         printAll();
         System.out.println("Получение задачи по id");
         System.out.println(managerImpl.getByIdTask(tes1.getId()));
+
         System.out.println("Удаление задачи по id");
         managerImpl.removeTaskId(t1.getId());
+
         System.out.println(managerImpl.getByIdTask(t3.getId()));
+
         System.out.println("Создаем эпик");
-
         Epic test6 = new Epic(managerImpl.generateId(), "Тест", "Java",null);
-
         managerImpl.createEpics(test6);
+
         System.out.println("Обновление задачи");
         managerImpl.updateTask(new Task(tes1.getId(), "Научwedиться", "помоги", NEW));
         System.out.println(managerImpl.getAllTasks());
@@ -54,19 +56,22 @@ public class Main  {
 
         System.out.println("Присваеваем статус эпику относительно подзадачи");
         System.out.println(managerImpl.gettingSubTasksByEpicId(test6.getId()));
-       //  managerImpl.updateStatus(ep13);
         printAll();
-        /*System.out.println("Удаляем подзадачи по id");
-        managerImpl.removeSubTaskId(4);
+        System.out.println("Удаляем подзадачу по id");
+        managerImpl.removeSubTaskId(13);
         managerImpl.getAllSubtasks();
         printAll();
+
         System.out.println("Удаляем эпик по id");
+        managerImpl.removeEpicId(test6.getId());
+        printAll();
+
         managerImpl.clearEpic();
         printAll();
         printAll();
         System.out.println("Удаление всего");
         managerImpl.clearAll();
-        printAll();*/
+        printAll();
     }
 
     static void printAll(){
