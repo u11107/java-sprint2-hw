@@ -1,15 +1,13 @@
 package ru.yandex.practicum.task;
 
-
-
-public class Tasks {
+public class Task {
     private Integer id;
     private String title;
     private String description;
     private Status status;
 
 
-    public Tasks(Integer id, String title, String description, Status status) {
+    public Task(Integer id, String title, String description, Status status) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -17,7 +15,7 @@ public class Tasks {
 
     }
 
-    public Tasks(String title, String description, Status status) {
+    public Task(String title, String description, Status status) {
         this.title = title;
         this.description = description;
         this.status = status;

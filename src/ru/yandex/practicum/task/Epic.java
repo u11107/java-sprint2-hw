@@ -1,12 +1,12 @@
 package ru.yandex.practicum.task;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class Epic extends Tasks {
+public class Epic extends Task {
     private ArrayList<SubTasks> subTaskList;
 
-
-    public Epic(Integer id, String title, String description) {
+    public Epic(Integer id, String title, String description, Status status) {
         super(id, title, description, null);
         this.subTaskList = new ArrayList<>();
     }
@@ -41,6 +41,6 @@ public class Epic extends Tasks {
 
     @Override
     public int hashCode() {
-        return subTaskList.hashCode();
+        return Objects.hash(super.hashCode(), getSubTaskList());
     }
 }

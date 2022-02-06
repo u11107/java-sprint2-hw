@@ -1,51 +1,78 @@
-import ru.yandex.practicum.manager.Manager;
+import ru.yandex.practicum.manager.ManagerImpl;
 import ru.yandex.practicum.task.*;
+import static ru.yandex.practicum.task.Status.*;
 
 public class Main  {
-    static Manager manager = new Manager();
+    static ManagerImpl managerImpl = new ManagerImpl();
 
     public static void main(String[] args) {
         System.out.println("Время практики");
         System.out.println("Создаем задачу");
-        Tasks tes1 = new Tasks(manager.generateId(),"Научиться учиться", "Яндекс помоги", Status.NEW);
-        manager.createTasks(tes1);
+
+
+        Task tes1 = new Task(managerImpl.generateId(),"Научиться учиться", "Яндекс помоги", NEW);
+        Task t1 = new Task(managerImpl.generateId(),"Яндекс помоги", "учиться", NEW);
+        Task t2 = new Task(managerImpl.generateId(),"Научиться", "помоги", NEW);
+        Task t3 = new Task(managerImpl.generateId(),"учиться", "Яндекс ", NEW);
+        Task t4 = new Task(managerImpl.generateId(),"Научиться", "помоги", NEW);
+        managerImpl.createTasks(tes1);
+        managerImpl.createTasks(t1);
+        managerImpl.createTasks(t2);
+        managerImpl.createTasks(t3);
+        managerImpl.createTasks(t4);
+        System.out.println("Обновляем задачу");
+        managerImpl.updateTask(t3 = new Task(tes1.getId(),"123учиться", "Яндекс ", NEW));
         printAll();
         System.out.println("Получение задачи по id");
-        System.out.println(manager.gettingById(2));
+        System.out.println(managerImpl.getByIdTask(tes1.getId()));
         System.out.println("Удаление задачи по id");
-        manager.removeTaskId(2);
-        System.out.println(manager.gettingById(2));
+        managerImpl.removeTaskId(t1.getId());
+        System.out.println(managerImpl.getByIdTask(t3.getId()));
         System.out.println("Создаем эпик");
-        Epic test2 = new Epic(manager.generateId(), "Java", "работай");
-        manager.createEpics(test2);
+
+        Epic test6 = new Epic(managerImpl.generateId(), "Тест", "Java",null);
+
+        managerImpl.createEpics(test6);
+        System.out.println("Обновление задачи");
+        managerImpl.updateTask(new Task(tes1.getId(), "Научwedиться", "помоги", NEW));
+        System.out.println(managerImpl.getAllTasks());
         printAll();
         System.out.println("Создаем подзадачи");
-        SubTasks ep1 = new SubTasks(manager.generateId(),"Завтра на работу", "А я сижу в 3 утра и пишу код",Status.NEW,3);
-        SubTasks ep2 = new SubTasks(manager.generateId(),"Я правлю код в сне", "я заболел java",Status.NEW,3);
-        manager.createSubtask(ep1);
-        System.out.println(manager.getAllSubtasks());
-        manager.addSubTaskEpic(ep1);
-        manager.createSubtask(ep2);
-        manager.addSubTaskEpic(ep2);
+        SubTasks ep13 = new SubTasks(managerImpl.generateId(),"Завтра на работу", "А я сижу в 3 утра и пишу код", DONE,test6.getId());
+        SubTasks ep2 = new SubTasks(managerImpl.generateId(),"Я правлю код в сне", "я заболел java", NEW,test6.getId());
+        SubTasks ep3 = new SubTasks(managerImpl.generateId(),"Я правлю код в сне", "я заболел java", DONE,test6.getId());
+        SubTasks ep6 = new SubTasks(managerImpl.generateId(),"Я правлю код в сне", "я заболел java", DONE,test6.getId());
+        managerImpl.createSubtask(ep13);
+        managerImpl.createSubtask(ep6);
+        managerImpl.createSubtask(ep3);
+        System.out.println(managerImpl.getAllSubtasks());
+        System.out.println(managerImpl.getAllSubtasks());
+
+        managerImpl.createSubtask(ep2);
+        managerImpl.removeSubTaskId(ep6.getId());
+        managerImpl.removeSubTaskId(ep13.getId());
+
         System.out.println("Присваеваем статус эпику относительно подзадачи");
-        manager.updateStatus(ep1);
+        System.out.println(managerImpl.gettingSubTasksByEpicId(test6.getId()));
+       //  managerImpl.updateStatus(ep13);
         printAll();
-        System.out.println("Удаляем подзадачи по id");
-        manager.removeSubTaskId(4);
-        manager.getAllSubtasks();
+        /*System.out.println("Удаляем подзадачи по id");
+        managerImpl.removeSubTaskId(4);
+        managerImpl.getAllSubtasks();
         printAll();
         System.out.println("Удаляем эпик по id");
-        manager.removeEpicId(3);
+        managerImpl.clearEpic();
+        printAll();
         printAll();
         System.out.println("Удаление всего");
-        manager.clearAll();
-        printAll();
+        managerImpl.clearAll();
+        printAll();*/
     }
 
     static void printAll(){
-        System.out.println(manager.getAllTasks());
-        System.out.println(manager.getAllEpics());
-        System.out.println(manager.getAllSubtasks());
+        System.out.println(managerImpl.getAllTasks());
+        System.out.println(managerImpl.getAllEpics());
+        System.out.println(managerImpl.getAllSubtasks());
     }
 
 }

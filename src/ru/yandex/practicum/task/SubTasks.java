@@ -1,9 +1,7 @@
 package ru.yandex.practicum.task;
 
-
-
-public class SubTasks extends Tasks {
-    private Integer idFromEpic;
+public class SubTasks extends Task {
+    private int idFromEpic;
 
     public SubTasks(Integer id, String title, String description, Status status, Integer idFromEpic) {
         super(id, title, description, status);
@@ -29,6 +27,4 @@ public class SubTasks extends Tasks {
                 ", idFromEpic=" + this.getIdFromEpic() +
                 '}';
     }
-
-
 }
