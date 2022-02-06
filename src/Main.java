@@ -34,8 +34,13 @@ public class Main  {
         System.out.println("Создаем эпик");
         Epic test6 = new Epic(managerImpl.generateId(), "Тест", "Java",null);
         managerImpl.createEpics(test6);
-
-        System.out.println("Обновление задачи");
+        printAll();
+        SubTasks ep13 = new SubTasks(managerImpl.generateId(),"Завтра на работу", "А я сижу в 3 утра и пишу код", DONE,test6.getId());
+        managerImpl.createSubtask(ep13);
+        printAll();
+        managerImpl.clearAllSubTask();
+        printAll();
+        /*System.out.println("Обновление задачи");
         managerImpl.updateTask(new Task(tes1.getId(), "Научwedиться", "помоги", NEW));
         System.out.println(managerImpl.getAllTasks());
         printAll();
@@ -52,7 +57,12 @@ public class Main  {
 
         managerImpl.createSubtask(ep2);
         managerImpl.removeSubTaskId(ep6.getId());
-        managerImpl.removeSubTaskId(ep13.getId());
+        System.out.println(managerImpl.getAllEpics());
+        managerImpl.clearAllSubTask();
+        System.out.println(managerImpl.getAllEpics());
+        System.out.println(managerImpl.getAllSubtasks());*/
+
+        /*managerImpl.removeSubTaskId(ep13.getId());
 
         System.out.println("Присваеваем статус эпику относительно подзадачи");
         System.out.println(managerImpl.gettingSubTasksByEpicId(test6.getId()));
@@ -71,10 +81,10 @@ public class Main  {
         printAll();
         System.out.println("Удаление всего");
         managerImpl.clearAll();
-        printAll();
+        printAll();*/
     }
 
-    static void printAll(){
+     public static void printAll(){
         System.out.println(managerImpl.getAllTasks());
         System.out.println(managerImpl.getAllEpics());
         System.out.println(managerImpl.getAllSubtasks());

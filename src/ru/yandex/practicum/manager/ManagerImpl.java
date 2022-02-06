@@ -6,6 +6,7 @@ import ru.yandex.practicum.task.Task;
 import ru.yandex.practicum.task.SubTasks;
 import java.util.ArrayList;
 import java.util.HashMap;
+import static ru.yandex.practicum.task.Status.*;
 
 public class ManagerImpl implements Manager {
     HashMap<Integer, Task> tasks;
@@ -185,6 +186,11 @@ public class ManagerImpl implements Manager {
     //удаление всех subtask
     public void clearAllSubTask() {
         subtask.clear();
+        for (Epic epic : epics.values()) {
+            epic.getSubTaskList().clear();
+            updateStatus(epic);
+        }
+        System.out.println("Все подзадачи удалены, статус эпика обновлен");
     }
 
     // получение всех subtask
@@ -221,10 +227,10 @@ public class ManagerImpl implements Manager {
         int newStatus = 0;
         int doneStatus = 0;
         if (epic.getSubTaskList().size() == 0) {
-            epic.setStatus(Status.NEW);
+            epic.setStatus(NEW);
         } else {
             for (SubTasks subTasks : epic.getSubTaskList()) {
-                if (subTasks.getStatus() == Status.NEW) {
+                if (subTasks.getStatus() == NEW) {
                     newStatus++;
                 } else if (subTasks.getStatus() == Status.DONE) {
                     doneStatus++;
@@ -232,7 +238,7 @@ public class ManagerImpl implements Manager {
                 }
             }
             if (epic.getSubTaskList().size() == newStatus) {
-                epic.setStatus(Status.NEW);
+                epic.setStatus(NEW);
             } else if (epic.getSubTaskList().size() == doneStatus) {
                 epic.setStatus(Status.DONE);
             } else {

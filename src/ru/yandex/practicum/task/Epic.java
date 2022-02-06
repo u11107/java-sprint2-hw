@@ -3,11 +3,13 @@ package ru.yandex.practicum.task;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static ru.yandex.practicum.task.Status.*;
+
 public class Epic extends Task {
     private ArrayList<SubTasks> subTaskList;
 
     public Epic(Integer id, String title, String description, Status status) {
-        super(id, title, description, null);
+        super(id, title, description, NEW);
         this.subTaskList = new ArrayList<>();
     }
 
