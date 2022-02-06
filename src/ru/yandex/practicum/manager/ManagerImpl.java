@@ -206,6 +206,10 @@ public class ManagerImpl implements Manager {
     //Удаление subTask по id
     @Override
     public void removeSubTaskId(int id) {
+        if(subtask.get(id) == null) {
+            System.out.println("Ошибка, подзадачи с таким id нет!");
+            return;
+        }
         SubTasks s = subtask.remove(id);
         Epic epic = epics.get(s.getIdFromEpic());
         epic.getSubTaskList().remove(s);
