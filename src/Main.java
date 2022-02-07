@@ -32,20 +32,19 @@ public class Main  {
         System.out.println(managerImpl.getByIdTask(t3.getId()));
 
         System.out.println("Создаем эпик");
-        Epic test6 = new Epic(managerImpl.generateId(), "Тест", "Java",null);
+        Epic test6 = new Epic(managerImpl.generateId(), "Тест", "Java", null);
         managerImpl.createEpics(test6);
         printAll();
         SubTasks ep13 = new SubTasks(managerImpl.generateId(),"Завтра на работу", "А я сижу в 3 утра и пишу код", DONE,test6.getId());
-        managerImpl.createSubtask(ep13);
         printAll();
         managerImpl.clearAllSubTask();
         printAll();
-        /*System.out.println("Обновление задачи");
+        System.out.println("Обновление задачи");
         managerImpl.updateTask(new Task(tes1.getId(), "Научwedиться", "помоги", NEW));
         System.out.println(managerImpl.getAllTasks());
         printAll();
         System.out.println("Создаем подзадачи");
-        SubTasks ep13 = new SubTasks(managerImpl.generateId(),"Завтра на работу", "А я сижу в 3 утра и пишу код", DONE,test6.getId());
+        SubTasks ep1 = new SubTasks(managerImpl.generateId(),"Завтра на работу", "А я сижу в 3 утра и пишу код", DONE,test6.getId());
         SubTasks ep2 = new SubTasks(managerImpl.generateId(),"Я правлю код в сне", "я заболел java", NEW,test6.getId());
         SubTasks ep3 = new SubTasks(managerImpl.generateId(),"Я правлю код в сне", "я заболел java", DONE,test6.getId());
         SubTasks ep6 = new SubTasks(managerImpl.generateId(),"Я правлю код в сне", "я заболел java", DONE,test6.getId());
@@ -60,12 +59,12 @@ public class Main  {
         System.out.println(managerImpl.getAllEpics());
         managerImpl.clearAllSubTask();
         System.out.println(managerImpl.getAllEpics());
-        System.out.println(managerImpl.getAllSubtasks());*/
+        System.out.println(managerImpl.getAllSubtasks());
 
-        /*managerImpl.removeSubTaskId(ep13.getId());
+        managerImpl.removeSubTaskId(ep13.getId());
 
         System.out.println("Присваеваем статус эпику относительно подзадачи");
-        System.out.println(managerImpl.gettingSubTasksByEpicId(test6.getId()));
+        System.out.println(managerImpl.getSubTasksByEpicId(test6.getId()));
         printAll();
         System.out.println("Удаляем подзадачу по id");
         managerImpl.removeSubTaskId(13);
@@ -81,7 +80,18 @@ public class Main  {
         printAll();
         System.out.println("Удаление всего");
         managerImpl.clearAll();
-        printAll();*/
+        printAll();
+
+        Epic q1 = new Epic(managerImpl.generateId(),"Тестирование", "Проверка", null);
+        managerImpl.createEpics(q1);
+
+        printAll();
+
+        SubTasks w1 = new SubTasks(managerImpl.generateId(), "Подзадача", "Добавлена ", DONE, 17);
+        managerImpl.createSubtask(w1);
+
+        printAll();
+
     }
 
      public static void printAll(){

@@ -3,6 +3,7 @@ package ru.yandex.practicum.manager;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
+
 import java.util.ArrayList;
 
 public interface Manager {
@@ -38,7 +39,7 @@ public interface Manager {
     void removeEpicId(int id);
 
     // получение epic по id
-    Epic gettingByEpicId(int id);
+    Epic getByEpicId(int id);
 
     //Удаление всех epic
     void clearEpic();
@@ -53,10 +54,10 @@ public interface Manager {
     ArrayList<SubTasks> getAllSubtasks();
 
     //получение subTask по id
-    SubTasks gettingBySubTaskId(int id);
+    SubTasks getBySubTaskId(int id);
 
     //получение subTask определенного эпика
-    ArrayList<SubTasks> gettingSubTasksByEpicId(int id);
+    ArrayList<SubTasks> getSubTasksByEpicId(int id);
 
     //Удаление subTask по id
     void removeSubTaskId(int id);

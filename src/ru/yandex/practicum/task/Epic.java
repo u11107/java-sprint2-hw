@@ -3,7 +3,7 @@ package ru.yandex.practicum.task;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static ru.yandex.practicum.task.Status.*;
+import static ru.yandex.practicum.task.Status.NEW;
 
 public class Epic extends Task {
     private ArrayList<SubTasks> subTaskList;
@@ -39,6 +39,31 @@ public class Epic extends Task {
         Epic epic = (Epic) o;
 
         return subTaskList.equals(epic.subTaskList);
+    }
+
+    @Override
+    public Status getStatus() {
+        int newStatus = 0;
+        int doneStatus = 0;
+        if (subTaskList.size() == 0) {
+            return Status.NEW;
+        } else {
+            for (SubTasks subTasks : subTaskList) {
+                if (subTasks.getStatus() == Status.NEW) {
+                    newStatus++;
+                } else if (subTasks.getStatus() == Status.DONE) {
+                    doneStatus++;
+
+                }
+            }
+            if (subTaskList.size() == newStatus) {
+                return Status.NEW;
+            } else if (subTaskList.size() == doneStatus) {
+                return Status.DONE;
+            } else {
+                return Status.IN_PROGRESS;
+            }
+        }
     }
 
     @Override
