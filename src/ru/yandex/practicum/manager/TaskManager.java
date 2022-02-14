@@ -5,6 +5,7 @@ import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
 
@@ -64,4 +65,8 @@ public interface TaskManager {
 
     //обновление subTask
     void updateSubtask(SubTasks SubTasks);
+
+    Integer generateId();
+
+    List<Task> history();
 }

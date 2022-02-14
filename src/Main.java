@@ -1,10 +1,11 @@
-import ru.yandex.practicum.manager.InMemoryTaskManager;
+
+import ru.yandex.practicum.manager.Managers;
 import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.task.*;
 import static ru.yandex.practicum.task.Status.*;
 
 public class Main  {
-    static InMemoryTaskManager managerImpl = new InMemoryTaskManager();
+    static TaskManager managerImpl = Managers.getDefault(Managers.getDefaultHistory());
 
     public static void main(String[] args) {
         System.out.println("Время практики");
@@ -92,6 +93,11 @@ public class Main  {
         managerImpl.createSubtask(w1);
 
         printAll();
+        Task h1 = new Task(managerImpl.generateId(),"Яндекс", "учиться", NEW);
+        managerImpl.createTasks(h1);
+        managerImpl.getByIdTask(h1.getId());
+
+        System.out.println(managerImpl.history());
 
 
     }

@@ -6,8 +6,11 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private static final List<Task> history = new ArrayList<>();
+    private final List<Task> history;
 
+    public InMemoryHistoryManager() {
+        history = new ArrayList<>();
+    }
 
     @Override
     public void add(Task task) {
@@ -23,16 +26,12 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public void remove(Task task) {
-        if(history.contains(task)) {
+    public void removeHistory(Task task) {
+        if (history.contains(task)) {
             history.remove(task);
         } else {
             System.out.println("Ошибка, нет такой задачи!");
         }
     }
 
-    @Override
-    public void updateHistory(List<Task> history) {
-
-    }
 }
