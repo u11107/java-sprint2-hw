@@ -24,10 +24,10 @@ public class Epic extends Task {
     @Override
     public String toString() {
         return "Epic{" +
-                "id=" + this.getId() +
-                ", title='" + this.getTitle() + '\'' +
-                ", description='" + this.getDescription() + '\'' +
-                ", status=" + this.getStatus() +
+                "id=" + getId() +
+                ", title='" + getTitle() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", status=" + getStatus() +
                 '}';
     }
 
@@ -45,7 +45,7 @@ public class Epic extends Task {
     public Status getStatus() {
         int newStatus = 0;
         int doneStatus = 0;
-        if (subTaskList.size() == 0) {
+        if (subTaskList.isEmpty()) {
             return Status.NEW;
         } else {
             for (SubTasks subTasks : subTaskList) {

@@ -7,10 +7,11 @@ import ru.yandex.practicum.task.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ManagerImpl implements Manager {
-    private HashMap<Integer, Task> tasks;
-    private HashMap<Integer, Epic> epics;
-    private HashMap<Integer, SubTasks> subtask;
+public class InMemoryTaskManager implements TaskManager {
+    private final HashMap<Integer, Task> tasks;
+    private final HashMap<Integer, Epic> epics;
+    private final HashMap<Integer, SubTasks> subtask;
+    private static final HistoryManager historyManager = new InMemoryHistoryManager();
     private Integer id = 1;
 
     // генератор id
@@ -30,19 +31,19 @@ public class ManagerImpl implements Manager {
         return subtask;
     }
 
-    public ManagerImpl() {
+
+
+    public InMemoryTaskManager() {
         tasks = new HashMap<Integer, Task>();
         epics = new HashMap<Integer, Epic>();
         subtask = new HashMap<Integer, SubTasks>();
     }
 
-    //вывод всех tasks
     @Override
     public ArrayList<Task> getAllTasks() {
         return new ArrayList<>(tasks.values());
     }
 
-    // создание новой задачи
     @Override
     public void createTasks(Task task) {
         if (task.getId() == null) {
@@ -53,7 +54,6 @@ public class ManagerImpl implements Manager {
         this.tasks.put(task.getId(), task);
     }
 
-    //получение задачи по идентефикатору
     @Override
     public Task getByIdTask(int id) {
         if (tasks.containsKey(id)) {
@@ -71,7 +71,6 @@ public class ManagerImpl implements Manager {
     }
 
     @Override
-    // удаление всех задач
     public void clearAll() {
         tasks.clear();
         epics.clear();
@@ -80,7 +79,6 @@ public class ManagerImpl implements Manager {
     }
 
     @Override
-    //удаление по идентефикатору
     public void removeTaskId(int id) {
         if (tasks.get(id) != null) {
             tasks.remove(id);
@@ -91,13 +89,11 @@ public class ManagerImpl implements Manager {
     }
 
     @Override
-    // Обновление task
     public void updateTask(Task tasks) {
         this.tasks.put(tasks.getId(), tasks);
     }
 
     @Override
-    //создание нового epic
     public void createEpics(Epic epic) {
         if (epics.containsKey(epic.getId())) {
             System.out.println("Эпик с таким ключем уже существует");
@@ -111,14 +107,12 @@ public class ManagerImpl implements Manager {
         System.out.println("Новый эпик добавлен");
     }
 
-    // вывод всех epic
     @Override
     public ArrayList<Epic> getAllEpics() {
         return new ArrayList<>(epics.values());
     }
 
     @Override
-    //удаление epic по id
     public void removeEpicId(int id) {
         if (epics.get(id) == null) {
             System.out.println("Эпика с таким id не существует");
@@ -134,7 +128,6 @@ public class ManagerImpl implements Manager {
     }
 
     @Override
-    //Удаление всех epic
     public void clearEpic() {
         epics.clear();
         subtask.clear();
@@ -142,7 +135,6 @@ public class ManagerImpl implements Manager {
     }
 
     @Override
-    //Обновление epic
     public void updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())) {
             System.out.println("Такого эпика не существует");
@@ -153,7 +145,6 @@ public class ManagerImpl implements Manager {
     }
 
     @Override
-    // получение epic по id
     public Epic getByEpicId(int id) {
         if (epics.containsKey(id)) {
             return epics.get(id);
@@ -163,18 +154,17 @@ public class ManagerImpl implements Manager {
     }
 
     @Override
-    //создание subtask
     public void createSubtask(SubTasks subTask) {
         if (epics.containsKey(subTask.getIdFromEpic())) {
             subtask.put(subTask.getId(), subTask);
             addSubTaskEpic(subTask);
+            updateSubtask(subTask);
             return;
         }
         System.out.println("Подзадача создана и добавлена в эпик");
     }
 
 
-    //добавление subtask в epic
     private void addSubTaskEpic(SubTasks subTask) {
         if (subtask.containsKey(subTask.getIdFromEpic())) {
             System.out.println("Ошибка");
@@ -186,26 +176,25 @@ public class ManagerImpl implements Manager {
         }
         epics.get(subTask.getIdFromEpic()).getSubTaskList().add(subTask);
 
+
         System.out.println("Подзадачи добавлены в эпик");
     }
 
     @Override
-    //удаление всех subtask
     public void clearAllSubTask() {
         subtask.clear();
         for (Epic epic : epics.values()) {
             epic.getSubTaskList().clear();
         }
         System.out.println("Все подзадачи удалены, статус эпика обновлен");
+
     }
 
-    // получение всех subtask
     @Override
     public ArrayList<SubTasks> getAllSubtasks() {
         return new ArrayList<>(subtask.values());
     }
 
-    //получение subTask по id
     @Override
     public SubTasks getBySubTaskId(int id) {
         if (subtask.containsKey(id)) {
@@ -215,7 +204,6 @@ public class ManagerImpl implements Manager {
         return null;
     }
 
-    //Удаление subTask по id
     @Override
     public void removeSubTaskId(int id) {
         if(subtask.get(id) == null) {
@@ -226,6 +214,28 @@ public class ManagerImpl implements Manager {
         Epic epic = epics.get(s.getIdFromEpic());
         epic.getSubTaskList().remove(s);
         System.out.println("Подзадача удалена");
+
+
+    }
+
+    @Override
+    public void updateSubtask(SubTasks SubTasks) {
+        if (!epics.containsKey(SubTasks.getIdFromEpic())) {
+            System.out.println("Ошибка. Указанный неверный id эпика.");
+            return;
+        }
+        if (!subtask.containsKey(SubTasks.getId())) {
+            System.out.println("Ошибка. Передан несуществующий id сабтаска.");
+            return;
+        }
+        if (subtask.get(SubTasks.getId()).getIdFromEpic() != SubTasks.getIdFromEpic()) {
+            System.out.println("Ошибка. Не совпадает id эпика.");
+            return;
+        }
+        epics.get(SubTasks.getIdFromEpic()).getSubTaskList().remove(subtask.get(SubTasks.getId()));
+        subtask.put(SubTasks.getId(), SubTasks);
+        epics.get(SubTasks.getIdFromEpic()).getSubTaskList().add(SubTasks);
+        System.out.println("Сабтаск № " + SubTasks.getId() + " обновлен.");
     }
 
     @Override

@@ -2,9 +2,9 @@ package ru.yandex.practicum.task;
 
 public class Task {
     private Integer id;
-    private String title;
-    private String description;
-    private Status status;
+    private final String title;
+    private final String description;
+    private final Status status;
 
 
     public Task(Integer id, String title, String description, Status status) {
@@ -50,6 +50,4 @@ public class Task {
                 ", status=" + status +
                 '}';
     }
-
-
 }

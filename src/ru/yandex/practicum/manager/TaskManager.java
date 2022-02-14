@@ -6,7 +6,7 @@ import ru.yandex.practicum.task.Task;
 
 import java.util.ArrayList;
 
-public interface Manager {
+public interface TaskManager {
 
     // создание нового tasks
     void createTasks(Task tasks);
@@ -61,4 +61,7 @@ public interface Manager {
 
     //Удаление subTask по id
     void removeSubTaskId(int id);
+
+    //обновление subTask
+    void updateSubtask(SubTasks SubTasks);
 }

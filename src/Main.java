@@ -1,9 +1,10 @@
-import ru.yandex.practicum.manager.ManagerImpl;
+import ru.yandex.practicum.manager.InMemoryTaskManager;
+import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.task.*;
 import static ru.yandex.practicum.task.Status.*;
 
 public class Main  {
-    static ManagerImpl managerImpl = new ManagerImpl();
+    static InMemoryTaskManager managerImpl = new InMemoryTaskManager();
 
     public static void main(String[] args) {
         System.out.println("Время практики");
@@ -91,6 +92,7 @@ public class Main  {
         managerImpl.createSubtask(w1);
 
         printAll();
+
 
     }
 
