@@ -8,17 +8,13 @@ import static ru.yandex.practicum.task.Status.NEW;
 public class Epic extends Task {
     private ArrayList<SubTasks> subTaskList;
 
-    public Epic(Integer id, String title, String description, Status status) {
+    public Epic(Integer id, String title, String description) {
         super(id, title, description, NEW);
         this.subTaskList = new ArrayList<>();
     }
 
     public ArrayList<SubTasks> getSubTaskList() {
         return subTaskList;
-    }
-
-    public void setSubTaskList(ArrayList<SubTasks> subTaskList) {
-        this.subTaskList = subTaskList;
     }
 
     @Override

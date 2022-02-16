@@ -1,7 +1,8 @@
 package ru.yandex.practicum.manager;
 
 import ru.yandex.practicum.task.Task;
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -9,7 +10,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     private final List<Task> history;
 
     public InMemoryHistoryManager() {
-        history = new ArrayList<>();
+        history = new LinkedList<>();
     }
 
     @Override
@@ -24,14 +25,4 @@ public class InMemoryHistoryManager implements HistoryManager {
     public List<Task> getHistory() {
         return history;
     }
-
-    @Override
-    public void removeHistory(Task task) {
-        if (history.contains(task)) {
-            history.remove(task);
-        } else {
-            System.out.println("Ошибка, нет такой задачи!");
-        }
-    }
-
 }

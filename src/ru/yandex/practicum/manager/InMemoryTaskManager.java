@@ -15,12 +15,12 @@ public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager;
     private Integer id = 1;
 
-     InMemoryTaskManager(HistoryManager historyManager) {
-        this.historyManager = historyManager;
-        tasks = new HashMap<Integer, Task>();
-        epics = new HashMap<Integer, Epic>();
-        subtasks = new HashMap<Integer, SubTasks>();
-    }
+  public InMemoryTaskManager(HistoryManager historyManager) {
+      this.historyManager = historyManager;
+      tasks = new HashMap<>();
+      epics = new HashMap<>();
+      subtasks = new HashMap<>();
+  }
 
     @Override
     public Integer generateId() {
@@ -28,14 +28,17 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public HashMap<Integer, Task> getTasks() {
+        System.out.println("Получение задачи");
         return tasks;
     }
 
     public HashMap<Integer, Epic> getEpics() {
+        System.out.println("Получение эпика");
         return epics;
     }
 
     public HashMap<Integer, SubTasks> getSubtasks() {
+        System.out.println("Получение подзадачи");
         return subtasks;
     }
 
@@ -212,7 +215,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeSubTaskId(int id) {
-        if(subtasks.get(id) == null) {
+        if (subtasks.get(id) == null) {
             System.out.println("Ошибка, подзадачи с таким id нет!");
             return;
         }

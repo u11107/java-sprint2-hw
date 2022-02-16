@@ -8,13 +8,8 @@ public class SubTasks extends Task {
         this.idFromEpic = idFromEpic;
     }
 
-
     public Integer getIdFromEpic() {
         return idFromEpic;
-    }
-
-    public void setIdFromEpic(Integer idFromEpic) {
-        this.idFromEpic = idFromEpic;
     }
 
     @Override

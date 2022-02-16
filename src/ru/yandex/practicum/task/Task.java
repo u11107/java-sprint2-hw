@@ -6,7 +6,6 @@ public class Task {
     private final String description;
     private final Status status;
 
-
     public Task(Integer id, String title, String description, Status status) {
         this.id = id;
         this.title = title;
@@ -29,11 +28,11 @@ public class Task {
         this.id = id;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 

@@ -5,6 +5,7 @@ import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface TaskManager {
@@ -69,4 +70,10 @@ public interface TaskManager {
     Integer generateId();
 
     List<Task> history();
+
+    HashMap<Integer, Task> getTasks();
+
+    HashMap<Integer, Epic> getEpics();
+
+    HashMap<Integer, SubTasks> getSubtasks();
 }
