@@ -18,26 +18,6 @@ public class Epic extends Task {
     }
 
     @Override
-    public String toString() {
-        return "Epic{" +
-                "id=" + getId() +
-                ", title='" + getTitle() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", status=" + getStatus() +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Epic epic = (Epic) o;
-
-        return subTaskList.equals(epic.subTaskList);
-    }
-
-    @Override
     public Status getStatus() {
         int newStatus = 0;
         int doneStatus = 0;
@@ -63,7 +43,27 @@ public class Epic extends Task {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Epic epic = (Epic) o;
+
+        return subTaskList.equals(epic.subTaskList);
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getSubTaskList());
+    }
+
+    @Override
+    public String toString() {
+        return "Epic{" +
+                "id=" + getId() +
+                ", title='" + getTitle() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", status=" + getStatus() +
+                '}';
     }
 }

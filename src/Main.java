@@ -8,7 +8,7 @@ import static ru.yandex.practicum.task.Status.DONE;
 import static ru.yandex.practicum.task.Status.NEW;
 
 public class Main  {
-    static TaskManager managerImpl = Managers.getDefault(Managers.getDefaultHistory());
+   private static final TaskManager managerImpl = Managers.getDefault(Managers.getDefaultHistory());
 
     public static void main(String[] args) {
         System.out.println("Время практики");
@@ -109,6 +109,7 @@ public class Main  {
         managerImpl.getByIdTask(test9.getId());
         managerImpl.getByIdTask(test9.getId());
         managerImpl.getByIdTask(test9.getId());
+        managerImpl.getByIdTask(test1.getId());
         managerImpl.getByIdTask(test9.getId());
         managerImpl.getByIdTask(test9.getId());
         managerImpl.getByIdTask(test9.getId());
@@ -116,12 +117,13 @@ public class Main  {
         managerImpl.getByIdTask(test9.getId());
         managerImpl.getByIdTask(test9.getId());
         managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test9.getId());
+        managerImpl.getByEpicId(17);
+
 
         System.out.println(managerImpl.history());
     }
 
-     public static void printAll(){
+    private static void printAll() {
         System.out.println(managerImpl.getAllTasks());
         System.out.println(managerImpl.getAllEpics());
         System.out.println(managerImpl.getAllSubtasks());

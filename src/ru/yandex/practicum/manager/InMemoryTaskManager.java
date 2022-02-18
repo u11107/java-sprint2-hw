@@ -27,21 +27,23 @@ public class InMemoryTaskManager implements TaskManager {
         return id++;
     }
 
+    @Override
     public HashMap<Integer, Task> getTasks() {
         System.out.println("Получение задачи");
         return tasks;
     }
 
+    @Override
     public HashMap<Integer, Epic> getEpics() {
         System.out.println("Получение эпика");
         return epics;
     }
 
+    @Override
     public HashMap<Integer, SubTasks> getSubtasks() {
         System.out.println("Получение подзадачи");
         return subtasks;
     }
-
 
     @Override
     public ArrayList<Task> getAllTasks() {
@@ -60,19 +62,18 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getByIdTask(int id) {
-        historyManager.add(tasks.get(id));
         if (tasks.containsKey(id)) {
-            return tasks.get(id);
+            System.out.println("Задача найдена");
+        } else {
+            System.out.println("Задача не найдена");
         }
-        if (epics.containsKey(id)) {
-            return epics.get(id);
+        if (tasks.get(id) != null) {
+            historyManager.add(tasks.get(id));
+            System.out.println("Задача добавлена в историю");
+        } else {
+            System.out.println("Задача не будет добавлена в историю");
         }
-        if (subtasks.containsKey(id)) {
-            return subtasks.get(id);
-
-        }
-        System.out.println("Нет задачи под этим номером");
-        return null;
+        return tasks.get(id);
     }
 
     @Override
@@ -100,7 +101,6 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createEpics(Epic epic) {
-        historyManager.add(epics.get(id));
         if (epics.containsKey(epic.getId())) {
             System.out.println("Эпик с таким ключем уже существует");
             return;
@@ -154,11 +154,17 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Epic getByEpicId(int id) {
         if (epics.containsKey(id)) {
-            return epics.get(id);
-
+            System.out.println("Эпик найден");
+        } else {
+            System.out.println("Эпик не найден");
         }
-        System.out.println("Эпик не найден");
-        return null;
+        if (epics.get(id) != null) {
+            historyManager.add(epics.get(id));
+            System.out.println("Эпик добавлен в историю");
+        } else {
+            System.out.println("Эпик не будет добавлен в историю");
+        }
+        return epics.get(id);
     }
 
     @Override
@@ -183,8 +189,6 @@ public class InMemoryTaskManager implements TaskManager {
             return;
         }
         epics.get(subTask.getIdFromEpic()).getSubTaskList().add(subTask);
-
-
         System.out.println("Подзадачи добавлены в эпик");
     }
 
@@ -205,12 +209,16 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public SubTasks getBySubTaskId(int id) {
-        historyManager.add(subtasks.get(id));
         if (subtasks.containsKey(id)) {
-            return subtasks.get(id);
+            System.out.println("Subtask найден");
         }
-        System.out.println("Subtask не найден");
-        return null;
+        if (subtasks.get(id) != null) {
+            historyManager.add(subtasks.get(id));
+            System.out.println("Subtask добавлен ы историю");
+        } else {
+            System.out.println("Subtask не будет добавлен в историю");
+        }
+        return subtasks.get(id);
     }
 
     @Override
@@ -223,8 +231,6 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epics.get(s.getIdFromEpic());
         epic.getSubTaskList().remove(s);
         System.out.println("Подзадача удалена");
-
-
     }
 
     @Override
@@ -249,6 +255,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public ArrayList<SubTasks> getSubTasksByEpicId(int id) {
+      if(epics.get(id).getSubTaskList() == null){
+          System.out.println("Ошибка, нет такого ID");
+      }
         return epics.get(id).getSubTaskList();
     }
 
