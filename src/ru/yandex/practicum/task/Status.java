@@ -5,6 +5,3 @@ public enum Status {
     NEW,
     DONE
 }
-
-
-

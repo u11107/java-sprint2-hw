@@ -118,6 +118,13 @@ public class Main  {
         managerImpl.getByIdTask(test9.getId());
         managerImpl.getByIdTask(test9.getId());
         managerImpl.getByEpicId(17);
+        Epic test01 = new Epic(managerImpl.generateId(), "Тест", "Java");
+        Epic test02 = new Epic(managerImpl.generateId(), "Тест", "Java");
+        managerImpl.createEpics(test02);
+        managerImpl.createEpics(test01);
+        printAll();
+        managerImpl.getSubTasksByEpicId(17);
+
 
 
         System.out.println(managerImpl.history());

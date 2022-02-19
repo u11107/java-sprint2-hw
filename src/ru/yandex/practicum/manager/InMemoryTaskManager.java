@@ -15,12 +15,12 @@ public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager;
     private Integer id = 1;
 
-  public InMemoryTaskManager(HistoryManager historyManager) {
-      this.historyManager = historyManager;
-      tasks = new HashMap<>();
-      epics = new HashMap<>();
-      subtasks = new HashMap<>();
-  }
+    public InMemoryTaskManager(HistoryManager historyManager) {
+        this.historyManager = historyManager;
+        tasks = new HashMap<>();
+        epics = new HashMap<>();
+        subtasks = new HashMap<>();
+    }
 
     @Override
     public Integer generateId() {
@@ -178,7 +178,6 @@ public class InMemoryTaskManager implements TaskManager {
         System.out.println("Подзадача создана и добавлена в эпик");
     }
 
-
     private void addSubTaskEpic(SubTasks subTask) {
         if (subtasks.containsKey(subTask.getIdFromEpic())) {
             System.out.println("Ошибка");
@@ -255,9 +254,10 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public ArrayList<SubTasks> getSubTasksByEpicId(int id) {
-      if(epics.get(id).getSubTaskList() == null){
-          System.out.println("Ошибка, нет такого ID");
-      }
+        if (!epics.containsKey(id)) {
+            System.out.println("Ошибка, эпика с таким id не существует");
+            return null;
+        }
         return epics.get(id).getSubTaskList();
     }
 
