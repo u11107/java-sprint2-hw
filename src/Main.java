@@ -123,7 +123,14 @@ public class Main  {
         managerImpl.createEpics(test02);
         managerImpl.createEpics(test01);
         printAll();
-        managerImpl.getSubTasksByEpicId(17);
+        managerImpl.getSubTasksByEpicId(10);
+        System.out.println("Смотрим эпипик");
+        printAll();
+        System.out.println("Удаляю эпик");
+        managerImpl.removeEpicId(17);
+        printAll();
+
+
 
 
 

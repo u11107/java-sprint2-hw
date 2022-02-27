@@ -129,8 +129,9 @@ public class InMemoryTaskManager implements TaskManager {
                 subtasks.remove(i.getId());
             }
         }
+        historyManager.remove(id);
         epics.remove(id);
-        System.out.println("Эпик удален, с включенными в него подзадачами");
+        System.out.println("Эпик  удален, с включенными в него подзадачами");
     }
 
     @Override
