@@ -11,7 +11,6 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
-
     }
 
     public Integer getId() {
@@ -36,7 +35,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Tasks{" +
+        return "Task{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +

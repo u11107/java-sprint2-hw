@@ -2,8 +2,7 @@ package ru.yandex.practicum.task;
 
 import java.util.ArrayList;
 import java.util.Objects;
-
-import static ru.yandex.practicum.task.Status.NEW;
+import static ru.yandex.practicum.task.Status.*;
 
 public class Epic extends Task {
     private ArrayList<SubTasks> subTaskList;
@@ -22,39 +21,24 @@ public class Epic extends Task {
         int newStatus = 0;
         int doneStatus = 0;
         if (subTaskList.isEmpty()) {
-            return Status.NEW;
+            return NEW;
         } else {
             for (SubTasks subTasks : subTaskList) {
-                if (subTasks.getStatus() == Status.NEW) {
+                if (subTasks.getStatus() == NEW) {
                     newStatus++;
-                } else if (subTasks.getStatus() == Status.DONE) {
+                } else if (subTasks.getStatus() == DONE) {
                     doneStatus++;
 
                 }
             }
             if (subTaskList.size() == newStatus) {
-                return Status.NEW;
+                return NEW;
             } else if (subTaskList.size() == doneStatus) {
-                return Status.DONE;
+                return DONE;
             } else {
-                return Status.IN_PROGRESS;
+                return IN_PROGRESS;
             }
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Epic epic = (Epic) o;
-
-        return subTaskList.equals(epic.subTaskList);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getSubTaskList());
     }
 
     @Override

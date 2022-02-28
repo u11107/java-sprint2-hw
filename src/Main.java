@@ -44,6 +44,7 @@ public class Main  {
         SubTasks test7 = new SubTasks(managerImpl.generateId(), "Завтра на работу",
                 "А я сижу в 3 утра и пишу код", DONE, test6.getId());
         managerImpl.createSubtask(test7);
+        managerImpl.getBySubTaskId(11);
         managerImpl.getEpics();
         managerImpl.clearAllSubTask();
 
@@ -69,7 +70,6 @@ public class Main  {
         System.out.println(managerImpl.getAllSubtasks());
         managerImpl.getSubtasks();
         managerImpl.createSubtask(testSubtask4);
-        managerImpl.removeSubTaskId(testSubtask2.getId());
         System.out.println(managerImpl.getAllEpics());
         managerImpl.clearAllSubTask();
         System.out.println(managerImpl.getAllEpics());
@@ -122,6 +122,7 @@ public class Main  {
         Epic test02 = new Epic(managerImpl.generateId(), "Тест", "Java");
         managerImpl.createEpics(test02);
         managerImpl.createEpics(test01);
+        managerImpl.updateEpic(test01);
         printAll();
         managerImpl.getSubTasksByEpicId(10);
         System.out.println("Смотрим эпипик");
@@ -129,11 +130,6 @@ public class Main  {
         System.out.println("Удаляю эпик");
         managerImpl.removeEpicId(17);
         printAll();
-
-
-
-
-
         System.out.println(managerImpl.history());
     }
 

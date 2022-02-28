@@ -1,18 +1,17 @@
 package ru.yandex.practicum.manager;
 
-import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.Task;
 
 import java.util.List;
 
 public interface HistoryManager {
-//добавление в историю
+
+    //добавление в историю
     void add(Task task);
-// просмотр истории
+
+    // просмотр истории
     List<Task> getHistory();
-// удаление по id
+
+    // удаление по id
     void remove(int id);
-
-
-
 }
