@@ -1,8 +1,11 @@
 package ru.yandex.practicum.manager;
 
 import ru.yandex.practicum.task.Task;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
@@ -11,8 +14,10 @@ public class InMemoryHistoryManager implements HistoryManager {
         private Node next;
         private Node prev;
 
-        private Node(Task task) {
-            this.value = task;
+        public Node(Node prev, Task value, Node next) {
+            this.value = value;
+            this.next = next;
+            this.prev = prev;
         }
 
         public Task getValue() {
@@ -38,33 +43,22 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private Node head = null;// голова
     private Node tail = null;//хвост
-
+    private int size = 0; // я решил оставить size так как делал lastlink на основе стандартного метода LinkedList(я просто не понимаю как сделать иначе)
     private final Map<Integer, Node> newMap = new HashMap<>();
-    // добавляем в конец списка
-    private void linkLast(Task value) {
-            if (head == 0) {
-                Node newNode = new Node(value);
-                newMap.put(value.getId(), newNode);
-                head = newNode;
-            } else if (size == 1) {
-                Node newNode = new Node(value);
-                head.setNext(newNode);
-                newMap.put(value.getId(), newNode);
-                newNode.setPrev(head);
-                tail = newNode;
-            } else {
-                Node newNode = new Node(value);
-                newNode.setPrev(tail);
-                newMap.put(value.getId(), newNode);
-                tail.setNext(newNode);
-                tail = newNode;
-            }
-            ++size;
-        } else {
-            removeNode(head);
-            linkLast(value);
-        }
 
+    // добавляем в конец списка
+    public void linkLast(Task task) {
+        final Node oldTail = tail;
+        final Node newNode = new Node(oldTail, task, null);
+        tail = newNode;
+        if (oldTail == null) {
+            head = newNode;
+        } else {
+            oldTail.next = newNode;
+        }
+        newMap.put(task.getId(), newNode);
+        size++;
+    }
 
     // удаляем узел
     private void removeNode(Node value) {
@@ -103,16 +97,15 @@ public class InMemoryHistoryManager implements HistoryManager {
     private List <Task> getTasks() {
         if (head != null) {
             List<Task> tasks = new ArrayList<>();
-            Node iter = head;
-            while (iter.getNext() != null) {
-                tasks.add(iter.getValue());
-                iter = iter.getNext();
+            Node i = head;
+            while (i != null) {
+                tasks.add(i.getValue());
+                i = i.getNext();
             }
             return tasks;
         } else
             return null;
     }
-
 
     @Override
     public void add(Task task) {

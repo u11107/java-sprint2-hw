@@ -105,32 +105,21 @@ public class Main  {
 
         printAll();
         Task test9 = new Task(managerImpl.generateId(), "Яндекс", "учиться", NEW);
+        Task test10 = new Task(managerImpl.generateId(), "Яндекс", "учиться", NEW);
+        Task test11 = new Task(managerImpl.generateId(), "Яндекс", "учиться", NEW);
+        Task test12 = new Task(managerImpl.generateId(), "Яндекс", "учиться", NEW);
         managerImpl.createTasks(test9);
+        managerImpl.createTasks(test10);
+        managerImpl.createTasks(test11);
+        managerImpl.createTasks(test12);
         managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test1.getId());
-        managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByIdTask(test9.getId());
-        managerImpl.getByEpicId(17);
-        Epic test01 = new Epic(managerImpl.generateId(), "Тест", "Java");
-        Epic test02 = new Epic(managerImpl.generateId(), "Тест", "Java");
-        managerImpl.createEpics(test02);
-        managerImpl.createEpics(test01);
-        managerImpl.updateEpic(test01);
+        managerImpl.getByIdTask(test10.getId());
+        managerImpl.getByIdTask(test11.getId());
+        managerImpl.getByIdTask(test12.getId());
         printAll();
-        managerImpl.getSubTasksByEpicId(10);
-        System.out.println("Смотрим эпипик");
-        printAll();
-        System.out.println("Удаляю эпик");
-        managerImpl.removeEpicId(17);
-        printAll();
-        System.out.println(managerImpl.history());
+        System.out.println(managerImpl.getTasks());
+        managerImpl.removeTaskId(23);
+        System.out.println(managerImpl.getTasks());
     }
 
     private static void printAll() {
