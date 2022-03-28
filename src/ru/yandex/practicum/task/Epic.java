@@ -1,7 +1,7 @@
 package ru.yandex.practicum.task;
 
 import java.util.ArrayList;
-import java.util.Objects;
+
 import static ru.yandex.practicum.task.Status.*;
 
 public class Epic extends Task {
@@ -28,7 +28,6 @@ public class Epic extends Task {
                     newStatus++;
                 } else if (subTasks.getStatus() == DONE) {
                     doneStatus++;
-
                 }
             }
             if (subTaskList.size() == newStatus) {
@@ -43,11 +42,6 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
-                "id=" + getId() +
-                ", title='" + getTitle() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", status=" + getStatus() +
-                '}';
+        return getId() + "," + TaskType.EPIC + "," + getTitle() + "," + getDescription();
     }
 }

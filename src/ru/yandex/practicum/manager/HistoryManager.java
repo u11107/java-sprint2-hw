@@ -14,4 +14,5 @@ public interface HistoryManager {
 
     // удаление по id
     void remove(int id);
+
 }

@@ -8,18 +8,14 @@ public class SubTasks extends Task {
         this.idFromEpic = idFromEpic;
     }
 
-    public Integer getIdFromEpic() {
+
+    public  Integer getIdFromEpic() {
         return idFromEpic;
     }
 
     @Override
     public String toString() {
-        return "SubTasks{" +
-                "id=" + getId() +
-                ", title='" + getTitle() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", status=" + getStatus() + '\'' +
-                ", idFromEpic=" + getIdFromEpic() +
-                '}';
+        return getId() + "," + TaskType.SUBTASK + "," + getTitle() + "," + getStatus() + "," + getDescription() +
+                "," + getIdFromEpic();
     }
 }

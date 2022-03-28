@@ -1,10 +1,10 @@
 package ru.yandex.practicum.task;
 
 public class Task {
-    private Integer id;
-    private final String title;
-    private final String description;
-    private final Status status;
+    protected Integer id;
+    protected final String title;
+    protected final String description;
+    protected final Status status;
 
     public Task(Integer id, String title, String description, Status status) {
         this.id = id;
@@ -13,19 +13,21 @@ public class Task {
         this.status = status;
     }
 
+
     public Integer getId() {
         return id;
     }
+
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -33,13 +35,9 @@ public class Task {
         return status;
     }
 
+
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
+        return getId() + "," + TaskType.TASK + "," + getTitle() + "," + getDescription() + "," + getStatus();
     }
 }

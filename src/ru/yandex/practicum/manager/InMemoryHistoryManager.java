@@ -2,10 +2,7 @@ package ru.yandex.practicum.manager;
 
 import ru.yandex.practicum.task.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
@@ -43,7 +40,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private Node head = null;// голова
     private Node tail = null;//хвост
-    private int size = 0; // я решил оставить size так как делал lastlink на основе стандартного метода LinkedList(я просто не понимаю как сделать иначе)
+    private int size = 0; // я решил оставить size так как делал lastlink на основе стандартного метода LinkedList
     private final Map<Integer, Node> newMap = new HashMap<>();
 
     // добавляем в конец списка
@@ -93,10 +90,11 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         --size;
     }
+
     //собираем задачи в арайлист
-    private List <Task> getTasks() {
+    private List<Task> getTasks() {
+        List<Task> tasks = new ArrayList<>();
         if (head != null) {
-            List<Task> tasks = new ArrayList<>();
             Node i = head;
             while (i != null) {
                 tasks.add(i.getValue());
@@ -104,7 +102,7 @@ public class InMemoryHistoryManager implements HistoryManager {
             }
             return tasks;
         } else
-            return null;
+            return tasks;
     }
 
     @Override
@@ -125,6 +123,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory() {
-        return  getTasks();
+        return getTasks();
     }
+
 }

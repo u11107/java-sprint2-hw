@@ -9,10 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final HashMap<Integer, Task> tasks;
-    private final HashMap<Integer, Epic> epics;
-    private final HashMap<Integer, SubTasks> subtasks;
-    private final HistoryManager historyManager;
+   protected final HashMap<Integer, Task> tasks;
+   protected final HashMap<Integer, Epic> epics;
+   protected final HashMap<Integer, SubTasks> subtasks;
+   protected final HistoryManager historyManager;
     private Integer id = 1;
 
     public InMemoryTaskManager(HistoryManager historyManager) {
@@ -243,10 +243,10 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Ошибка. Передан несуществующий id сабтаска.");
             return;
         }
-        if (this.subtasks.get(subtask.getId()).getIdFromEpic().equals(subtask.getIdFromEpic())) {
-            System.out.println("Ошибка. Не совпадает id эпика.");
-            return;
-        }
+//        if (this.subtasks.get(subtask.getId()).getIdFromEpic().equals(subtask.getIdFromEpic())) {
+//            System.out.println("Ошибка. Не совпадает id эпика.");
+//            return;
+//        }
         epics.get(subtask.getIdFromEpic()).getSubTaskList().remove(this.subtasks.get(subtask.getId()));
         this.subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getIdFromEpic()).getSubTaskList().add(subtask);
@@ -264,7 +264,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> history() {
-        System.out.println("История просмотров");
+        System.out.println("История просмотров" + historyManager.getHistory());
         return historyManager.getHistory();
     }
 }
