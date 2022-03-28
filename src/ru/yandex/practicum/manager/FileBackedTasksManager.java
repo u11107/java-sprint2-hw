@@ -28,6 +28,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         System.out.println(manager.getAllTasks());
         System.out.println(manager.getAllEpics());
         System.out.println(manager.getAllSubtasks());
+
     }
 
     //метод сохранения
@@ -70,6 +71,25 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         return historyId.toString();
     }
 
+    public Task fromString(String values){
+        Task task = null;
+        String[] element = values.split(",");
+        TaskType newType = TaskType.valueOf(element[1]);
+        switch (newType){
+            case TASK:
+                task = new Task(Integer.parseInt(element[0]), element[2], element[4], Status.valueOf(element[1]));
+                break;
+            case EPIC:
+                task = new Epic(Integer.parseInt(element[0]), element[2], element[4]);
+                break;
+            case SUBTASK:
+                task = new SubTasks(Integer.parseInt(element[0]), element[2], element[4], Status.valueOf(element[1]),
+                        Integer.parseInt(element[5]));
+                break;
+        }
+        return task;
+    }
+
     //восстановления менеджера истории из CSV
     public static List<Integer> fromStringHistory(String value) {
         List<Integer> historyManagerId = new ArrayList<>();
@@ -92,6 +112,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                 if(line.isEmpty()) {
                     line = br.readLine();
                 }
+
             }
         } catch (IOException e) {
             System.out.println("Не удалось прочитать файл, будет оздан пустой менеджер");
