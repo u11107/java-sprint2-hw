@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-   protected final HashMap<Integer, Task> tasks;
-   protected final HashMap<Integer, Epic> epics;
-   protected final HashMap<Integer, SubTasks> subtasks;
-   protected final HistoryManager historyManager;
-    private Integer id = 1;
+    protected final HashMap<Integer, Task> tasks;
+    protected final HashMap<Integer, Epic> epics;
+    protected final HashMap<Integer, SubTasks> subtasks;
+    protected final HistoryManager historyManager;
+    protected Integer id = 1;
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -102,15 +102,15 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void createEpics(Epic epic) {
         if (epics.containsKey(epic.getId())) {
-            System.out.println("Эпик с таким ключем уже существует");
+            System.err.println("Эпик с таким ключем уже существует");
             return;
         }
         if (epic.getId() == null) {
-            System.out.println("Эпик с таким id уже существует");
+            System.err.println("Эпик с таким id уже существует");
             return;
         }
         epics.put(epic.getId(), epic);
-        System.out.println("Новый эпик добавлен");
+        System.err.println("Новый эпик добавлен");
     }
 
     @Override

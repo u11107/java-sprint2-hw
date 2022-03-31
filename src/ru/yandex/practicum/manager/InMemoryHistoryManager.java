@@ -92,17 +92,21 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     //собираем задачи в арайлист
-    private List<Task> getTasks() {
-        List<Task> tasks = new ArrayList<>();
+    private List<Task> getTasks() { // получить список задач в ArrayList
+        List<Task> arrayTasks = new ArrayList<>();
         if (head != null) {
-            Node i = head;
-            while (i != null) {
-                tasks.add(i.getValue());
-                i = i.getNext();
+            Node node = head;
+            while (node != null) {
+                arrayTasks.add(node.getValue());
+                if (node.getNext() == null) { // исправила
+                    break;
+                }
+                node = node.getNext();
             }
-            return tasks;
-        } else
-            return tasks;
+            return arrayTasks;
+        } else {
+            return arrayTasks;
+        }
     }
 
     @Override

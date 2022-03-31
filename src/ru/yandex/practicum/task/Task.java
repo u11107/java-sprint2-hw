@@ -1,5 +1,7 @@
 package ru.yandex.practicum.task;
 
+import ru.yandex.practicum.manager.HistoryManager;
+
 public class Task {
     protected Integer id;
     protected final String title;
@@ -17,7 +19,6 @@ public class Task {
     public Integer getId() {
         return id;
     }
-
 
     public void setId(Integer id) {
         this.id = id;
