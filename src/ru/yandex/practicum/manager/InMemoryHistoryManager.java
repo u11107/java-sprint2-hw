@@ -2,7 +2,10 @@ package ru.yandex.practicum.manager;
 
 import ru.yandex.practicum.task.Task;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
@@ -11,13 +14,13 @@ public class InMemoryHistoryManager implements HistoryManager {
         private Node next;
         private Node prev;
 
-        public Node(Node prev, Task value, Node next) {
+        Node(Node prev, Task value, Node next) {
             this.value = value;
             this.next = next;
             this.prev = prev;
         }
 
-        public Task getValue() {
+        Task getValue() {
             return value;
         }
 
@@ -38,8 +41,8 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    private Node head = null;// голова
-    private Node tail = null;//хвост
+    private Node head;// голова
+    private Node tail;//хвост
     private int size = 0; // я решил оставить size так как делал lastlink на основе стандартного метода LinkedList
     private final Map<Integer, Node> newMap = new HashMap<>();
 

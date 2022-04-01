@@ -70,7 +70,7 @@ public interface TaskManager {
     //генерация id
     Integer generateId();
 
-    //исторя
+    //история
     List<Task> history();
 
     //получение задач

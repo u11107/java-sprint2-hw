@@ -1,3 +1,4 @@
+import exception.ManagerSaveException;
 import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.SubTasks;
@@ -10,7 +11,7 @@ import static ru.yandex.practicum.task.Status.NEW;
 public class Main  {
    private static final TaskManager managerImpl = Managers.getDefault(Managers.getDefaultHistory());
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ManagerSaveException {
         System.out.println("Время практики");
         System.out.println("Создаем задачу");
 
