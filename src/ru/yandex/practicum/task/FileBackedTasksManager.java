@@ -15,7 +15,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     private FileBackedTasksManager(File file) {
         super(Managers.getDefaultHistory());
-        this.file = file;
+         this.file = file;
     }
 
     public static void main(String[] args){
