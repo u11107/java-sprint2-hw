@@ -1,12 +1,10 @@
 package ru.yandex.practicum.task;
 
-import ru.yandex.practicum.manager.HistoryManager;
-
 public class Task {
-    protected Integer id;
-    protected final String title;
-    protected final String description;
-    protected final Status status;
+    private Integer id;
+    private final String title;
+    private final String description;
+    private final Status status;
 
     public Task(Integer id, String title, String description, Status status) {
         this.id = id;
@@ -14,7 +12,6 @@ public class Task {
         this.description = description;
         this.status = status;
     }
-
 
     public Integer getId() {
         return id;
@@ -24,11 +21,11 @@ public class Task {
         this.id = id;
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 
@@ -36,9 +33,13 @@ public class Task {
         return status;
     }
 
-
     @Override
     public String toString() {
-        return getId() + "," + TaskType.TASK + "," + getTitle() + "," + getDescription() + "," + getStatus();
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

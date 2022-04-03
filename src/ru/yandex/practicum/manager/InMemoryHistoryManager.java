@@ -41,13 +41,13 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
     }
 
-    private Node head;// голова
-    private Node tail;//хвост
-    private int size = 0; // я решил оставить size так как делал lastlink на основе стандартного метода LinkedList
+    private Node head;
+    private Node tail;
+    private int size = 0;
     private final Map<Integer, Node> newMap = new HashMap<>();
 
-    // добавляем в конец списка
-    public void linkLast(Task task) {
+    //добавляем в конец списка
+    private void linkLast(Task task) {
         final Node oldTail = tail;
         final Node newNode = new Node(oldTail, task, null);
         tail = newNode;
@@ -60,7 +60,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         size++;
     }
 
-    // удаляем узел
+    //удаляем узел
     private void removeNode(Node value) {
         if (size == 1) {
             head = null;
@@ -95,21 +95,19 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     //собираем задачи в арайлист
-    private List<Task> getTasks() { // получить список задач в ArrayList
+    private List<Task> getTasks() {
         List<Task> arrayTasks = new ArrayList<>();
         if (head != null) {
             Node node = head;
-            while (node != null) {
+            while (true) {
                 arrayTasks.add(node.getValue());
-                if (node.getNext() == null) { // исправила
+                if (node.getNext() == null) {
                     break;
                 }
                 node = node.getNext();
             }
-            return arrayTasks;
-        } else {
-            return arrayTasks;
         }
+        return arrayTasks;
     }
 
     @Override

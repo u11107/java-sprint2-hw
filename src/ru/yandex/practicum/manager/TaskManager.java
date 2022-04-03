@@ -16,13 +16,13 @@ public interface TaskManager {
     //получение всех задач
     ArrayList<Task> getAllTasks();
 
-    //получение задачи по id
+    //получение задачи по идентифкатору
     Task getByIdTask(int id);
 
     //удаление задач, эпиков, подзадач
     void clearAll();
 
-    //удаление задачи по id
+    //удаление задачи по идентифкатору
     void removeTaskId(int id);
 
     //обновление задачи
@@ -37,16 +37,16 @@ public interface TaskManager {
     //обновление эпиков
     void updateEpic(Epic epic);
 
-    //удаление эпика по id
+    //удаление эпической задачи по идентификатору
     void removeEpicId(int id);
 
-    //получение эпика по id
+    //получение эпической задачи по идентификатору
     Epic getByEpicId(int id);
 
-    //удаление всех эпиков
+    //удаление эпических задач
     void clearEpic();
 
-    //созадние подзадачи
+    //создание подзадачи
     void createSubtask(SubTasks subTask);
 
     //удаление всех подзадач
@@ -55,30 +55,27 @@ public interface TaskManager {
     //получение всех подзадач
     ArrayList<SubTasks> getAllSubtasks();
 
-    //получение подзадачи по id
+    //получение подзадачи по идентифкатору
     SubTasks getBySubTaskId(int id);
 
     //получение подзадач включенных в эпик
     ArrayList<SubTasks> getSubTasksByEpicId(int id);
 
-    //удаление позадачи
+    //удаление позадачи по идентифкатору
     void removeSubTaskId(int id);
 
     //обновление подзадачи
     void updateSubtask(SubTasks SubTasks);
 
-    //генерация id
-    Integer generateId();
-
     //история
     List<Task> history();
 
-    //получение задач
+    //получение всех простых задач
     HashMap<Integer, Task> getTasks();
 
-    //получение эпиков
+    //получение всех эпических задач
     HashMap<Integer, Epic> getEpics();
 
-    //получение подзадач
+    //получение всех подзадач
     HashMap<Integer, SubTasks> getSubtasks();
 }

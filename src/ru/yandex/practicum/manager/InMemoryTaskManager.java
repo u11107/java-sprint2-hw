@@ -13,7 +13,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected final HashMap<Integer, Epic> epics;
     protected final HashMap<Integer, SubTasks> subtasks;
     protected final HistoryManager historyManager;
-    protected Integer id = 1;
+    protected static Integer id = 1;
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -22,8 +22,7 @@ public class InMemoryTaskManager implements TaskManager {
         subtasks = new HashMap<>();
     }
 
-    @Override
-    public Integer generateId() {
+    public static Integer generateId() {
         return id++;
     }
 
@@ -243,10 +242,7 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Ошибка. Передан несуществующий id сабтаска.");
             return;
         }
-//        if (this.subtasks.get(subtask.getId()).getIdFromEpic().equals(subtask.getIdFromEpic())) {
-//            System.out.println("Ошибка. Не совпадает id эпика.");
-//            return;
-//        }
+
         epics.get(subtask.getIdFromEpic()).getSubTaskList().remove(this.subtasks.get(subtask.getId()));
         this.subtasks.put(subtask.getId(), subtask);
         epics.get(subtask.getIdFromEpic()).getSubTaskList().add(subtask);

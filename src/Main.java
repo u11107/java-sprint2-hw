@@ -1,10 +1,11 @@
-import exception.ManagerSaveException;
+import ru.yandex.practicum.exception.ManagerSaveException;
 import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
 import ru.yandex.practicum.util.Managers;
 
+import static ru.yandex.practicum.manager.InMemoryTaskManager.generateId;
 import static ru.yandex.practicum.task.Status.DONE;
 import static ru.yandex.practicum.task.Status.NEW;
 
@@ -15,11 +16,11 @@ public class Main  {
         System.out.println("Время практики");
         System.out.println("Создаем задачу");
 
-        Task test1 = new Task(managerImpl.generateId(), "Научиться учиться", "Яндекс помоги", NEW);
-        Task test2 = new Task(managerImpl.generateId(), "Яндекс помоги", "учиться", NEW);
-        Task test3 = new Task(managerImpl.generateId(), "Научиться", "помоги", NEW);
-        Task test4 = new Task(managerImpl.generateId(), "учиться", "Яндекс ", NEW);
-        Task test5 = new Task(managerImpl.generateId(), "Научиться", "помоги", NEW);
+        Task test1 = new Task(generateId(), "Научиться учиться", "Яндекс помоги", NEW);
+        Task test2 = new Task(generateId(), "Яндекс помоги", "учиться", NEW);
+        Task test3 = new Task(generateId(), "Научиться", "помоги", NEW);
+        Task test4 = new Task(generateId(), "учиться", "Яндекс ", NEW);
+        Task test5 = new Task(generateId(), "Научиться", "помоги", NEW);
         managerImpl.createTasks(test1);
         managerImpl.createTasks(test2);
         managerImpl.createTasks(test3);
@@ -39,10 +40,10 @@ public class Main  {
         System.out.println(managerImpl.getByIdTask(test2.getId()));
 
         System.out.println("Создаем эпик");
-        Epic test6 = new Epic(managerImpl.generateId(), "Тест", "Java");
+        Epic test6 = new Epic(generateId(), "Тест", "Java");
         managerImpl.createEpics(test6);
         printAll();
-        SubTasks test7 = new SubTasks(managerImpl.generateId(), "Завтра на работу",
+        SubTasks test7 = new SubTasks(generateId(), "Завтра на работу",
                 "А я сижу в 3 утра и пишу код", DONE, test6.getId());
         managerImpl.createSubtask(test7);
         managerImpl.getBySubTaskId(11);
@@ -56,13 +57,13 @@ public class Main  {
 
         printAll();
         System.out.println("Создаем подзадачи");
-        SubTasks testSubtask1 = new SubTasks(managerImpl.generateId(), "Завтра на работу",
+        SubTasks testSubtask1 = new SubTasks(generateId(), "Завтра на работу",
                 "А я сижу в 3 утра и пишу код", DONE, test6.getId());
-        SubTasks testSubtask2 = new SubTasks(managerImpl.generateId(), "Я правлю код в сне",
+        SubTasks testSubtask2 = new SubTasks(generateId(), "Я правлю код в сне",
                 "я заболел java", NEW, test6.getId());
-        SubTasks testSubtask3 = new SubTasks(managerImpl.generateId(), "Я правлю код в сне",
+        SubTasks testSubtask3 = new SubTasks(generateId(), "Я правлю код в сне",
                 "я заболел java", DONE, test6.getId());
-        SubTasks testSubtask4 = new SubTasks(managerImpl.generateId(), "Я правлю код в сне",
+        SubTasks testSubtask4 = new SubTasks(generateId(), "Я правлю код в сне",
                 "я заболел java", DONE, test6.getId());
         managerImpl.createSubtask(testSubtask1);
         managerImpl.createSubtask(testSubtask2);
@@ -96,19 +97,19 @@ public class Main  {
         managerImpl.clearAll();
 
         printAll();
-        Epic testEpic1 = new Epic(managerImpl.generateId(), "Тестирование", "Проверка");
+        Epic testEpic1 = new Epic(generateId(), "Тестирование", "Проверка");
         managerImpl.createEpics(testEpic1);
 
         printAll();
-        SubTasks testSubtask5 = new SubTasks(managerImpl.generateId(), "Подзадача", "Добавлена ",
+        SubTasks testSubtask5 = new SubTasks(generateId(), "Подзадача", "Добавлена ",
                 DONE, 17);
         managerImpl.createSubtask(testSubtask5);
 
         printAll();
-        Task test9 = new Task(managerImpl.generateId(), "Яндекс", "учиться", NEW);
-        Task test10 = new Task(managerImpl.generateId(), "Яндекс", "учиться", NEW);
-        Task test11 = new Task(managerImpl.generateId(), "Яндекс", "учиться", NEW);
-        Task test12 = new Task(managerImpl.generateId(), "Яндекс", "учиться", NEW);
+        Task test9 = new Task(generateId(), "Яндекс", "учиться", NEW);
+        Task test10 = new Task(generateId(), "Яндекс", "учиться", NEW);
+        Task test11 = new Task(generateId(), "Яндекс", "учиться", NEW);
+        Task test12 = new Task(generateId(), "Яндекс", "учиться", NEW);
         managerImpl.createTasks(test9);
         managerImpl.createTasks(test10);
         managerImpl.createTasks(test11);
@@ -122,6 +123,9 @@ public class Main  {
         managerImpl.removeTaskId(23);
         System.out.println(managerImpl.getTasks());
     }
+
+
+
 
     private static void printAll() {
         System.out.println(managerImpl.getAllTasks());
