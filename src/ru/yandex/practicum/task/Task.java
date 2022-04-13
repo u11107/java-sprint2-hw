@@ -105,7 +105,9 @@ public class Task {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", status=" + status +
+                ", status=" + status + '\'' +
+                ", duration=" + duration + '\'' +
+                ", startTime=" + startTime + '\'' +
                 '}';
     }
 }
