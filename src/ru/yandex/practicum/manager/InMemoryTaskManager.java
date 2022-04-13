@@ -3,17 +3,17 @@ package ru.yandex.practicum.manager;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
+import ru.yandex.practicum.util.Managers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     protected final HashMap<Integer, Task> tasks;
     protected final HashMap<Integer, Epic> epics;
     protected final HashMap<Integer, SubTasks> subtasks;
-    protected final HistoryManager historyManager;
+    protected HistoryManager historyManager;
     protected static Integer id = 1;
+    protected TreeSet<Task> tasksByPriority = new TreeSet<>(Comparator.comparing(Task::getStartTime));
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -80,6 +80,7 @@ public class InMemoryTaskManager implements TaskManager {
         tasks.clear();
         epics.clear();
         subtasks.clear();
+        historyManager = Managers.getDefaultHistory();
         System.out.println("Все задачи удалены");
     }
 
@@ -94,8 +95,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task tasks) {
+    public byte updateTask(Task tasks) {
         this.tasks.put(tasks.getId(), tasks);
+        return 0;
     }
 
     @Override
@@ -141,14 +143,15 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateEpic(Epic epic) {
+    public Object updateEpic(Epic epic) {
         if (epics.containsKey(epic.getId())) {
 
             System.out.println("Такого эпика не существует");
-            return;
+            return null;
         }
         epics.put(epic.getId(), epic);
         System.out.println("Эпик обновлен");
+        return null;
     }
 
     @Override
@@ -253,7 +256,7 @@ public class InMemoryTaskManager implements TaskManager {
     public ArrayList<SubTasks> getSubTasksByEpicId(int id) {
         if (!epics.containsKey(id)) {
             System.out.println("Ошибка, эпика с таким id не существует");
-            return null;
+            return new ArrayList<>();
         }
         return epics.get(id).getSubTaskList();
     }
@@ -263,4 +266,11 @@ public class InMemoryTaskManager implements TaskManager {
         System.out.println("История просмотров" + historyManager.getHistory());
         return historyManager.getHistory();
     }
+    @Override
+    public Task[] getPrioritizedTasks() {
+        return tasksByPriority.toArray(new Task[0]);
+    }
+
+
+
 }

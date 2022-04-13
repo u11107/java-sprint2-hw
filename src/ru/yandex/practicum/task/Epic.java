@@ -1,5 +1,7 @@
 package ru.yandex.practicum.task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static ru.yandex.practicum.task.Status.*;
@@ -7,8 +9,14 @@ import static ru.yandex.practicum.task.Status.*;
 public class Epic extends Task {
     private ArrayList<SubTasks> subTaskList;
 
+
     public Epic(Integer id, String title, String description) {
-        super(id, title, description, NEW);
+        super(id,title, description, null);
+        this.subTaskList = new ArrayList<>();
+    }
+
+    public Epic(Integer id, String title, String description, Status status, LocalDateTime startTime) {
+        super(id, title, description, null, null, null);
         this.subTaskList = new ArrayList<>();
     }
 
@@ -39,6 +47,35 @@ public class Epic extends Task {
             }
         }
     }
+
+    @Override
+    public LocalDateTime getStartTime() {
+        if(subTaskList.isEmpty()) {
+            return null;
+        }
+        LocalDateTime tmp = subTaskList.get(0).getStartTime();
+        for (int i = 1; i < subTaskList.size(); i++) {
+            if(subTaskList.get(i).getStartTime().isBefore(tmp)) {
+                tmp = subTaskList.get(i).getStartTime();
+            }
+        }
+        return tmp;
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+       if(subTaskList.isEmpty()) {
+           return null;
+       }
+       LocalDateTime tmp = subTaskList.get(0).getEndTime();
+        for (int i = 1; i < subTaskList.size(); i++) {
+            if(subTaskList.get(i).getEndTime().isAfter(tmp)) {
+                tmp = subTaskList.get(i++).getEndTime();
+            }
+        }
+        return tmp;
+    }
+
 
     @Override
     public String toString() {

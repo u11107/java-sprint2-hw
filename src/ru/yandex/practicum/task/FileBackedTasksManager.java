@@ -6,30 +6,47 @@ import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.util.Managers;
 
 import java.io.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
+import static java.util.Comparator.*;
+import static ru.yandex.practicum.task.Task.getFormatter;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private File file;
 
-    private FileBackedTasksManager(File file) {
+    public FileBackedTasksManager(File file) {
         super(Managers.getDefaultHistory());
          this.file = file;
     }
 
     public static void main(String[] args){
         TaskManager manager = loadFromFile(new File("file24.csv"));
-        Task task1 = new Task(generateId(), "Купить билет", "Купить билет на метро", Status.NEW);
-        Task task2 = new Task(generateId(), "Купить билет", "Купить билет на метро", Status.NEW);
-        Epic epic1 = new Epic(generateId(), "Купить подарочную карту", "Зайти в магазаин купить " +
+        Task task1 = new Task(generateId(),"Купить билет", "Купить билет на метро", Status.NEW,
+                Duration.ofHours(2), LocalDateTime.of(2022, 01, 1, 0, 0));
+        Task task2 = new Task(generateId(),"Купить билет", "Купить билет на метро", Status.NEW,
+                Duration.ofHours(2), LocalDateTime.of(2022, 04, 22, 2, 0));
+        Epic epic1 = new Epic(generateId(), "Купить подарочную карту", "Зайти в магазин купить " +
                 "три подарочных карты");
         SubTasks sb1 = new SubTasks(generateId(), "Заправить авто", "Помыть авто", Status.NEW,
+                Duration.ofHours(2), LocalDateTime.of(2022, 01, 1, 10, 0),
+                epic1.getId());
+        SubTasks sb2 = new SubTasks(generateId(), "Заправить авто", "Помыть авто", Status.NEW,
+                Duration.ofHours(2), LocalDateTime.of(2022, 01, 1, 12, 0),
+                epic1.getId());
+        SubTasks sb3 = new SubTasks(generateId(), "Заправить авто", "Помыть авто", Status.NEW,
+                Duration.ofHours(2), LocalDateTime.of(2022, 01, 1, 10, 0),
                 epic1.getId());
         manager.createTasks(task2);
         manager.createTasks(task1);
         manager.createEpics(epic1);
         manager.createSubtask(sb1);
+        manager.createSubtask(sb2);
+        manager.createSubtask(sb3);
         System.out.println(manager.getAllTasks());
         System.out.println(manager.getAllEpics());
         System.out.println(manager.getAllSubtasks());
@@ -40,13 +57,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     //метод сохранения
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))  {
-                writer.write("id,type,title,status,description,epic" + "\n");
+                writer.write("id,type,title,status,description,epic,duration,startTime" + "\n");
                 for (Task task : getAllTasks()) {
                     writer.write(toStringTask(task));
                     writer.newLine();
                 }
                 for (Epic epic : getAllEpics()) {
-                    writer.write(toStringEpic(epic));
+                    writer.write(String.format(toStringEpic(epic)));
                     writer.newLine();
                 }
                 for (SubTasks subtask : getAllSubtasks()) {
@@ -75,7 +92,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         TaskType newType = TaskType.valueOf(element[1].trim());
         switch (newType) {
             case TASK:
-                task= new Task(Integer.parseInt(element[0].trim()), element[2].trim(), element[4].trim(),
+                task= new Task(element[2].trim(), element[4].trim(),
                 Status.valueOf(element[3].trim()));
                 fileBackedTasksManager.createTasks(task);
                 break;
@@ -114,6 +131,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     break;
                 }
                 fileBackedTasksManager.fromString(line);
+
             }
         } catch(IOException e) {
             try {
@@ -127,17 +145,19 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public static String toStringTask(Task task) {
         return task.getId() + "," + TaskType.TASK + "," + task.getTitle() + "," + task.getStatus() + ","
-                + task.getDescription() + ",";
+                + task.getDescription() + "," + task.getDuration() + "," + task.getStartTime().format(getFormatter());
     }
 
     public static String toStringEpic(Epic epic) {
         return epic.getId() + "," + TaskType.EPIC + ","  + epic.getTitle() + "," + epic.getStatus() + ","
-                + epic.getDescription() + ",";
+                + epic.getDescription() + "," + epic.getEndTime();
     }
 
     public static String toStringSubtask(SubTasks subTasks) {
         return subTasks.getId() + "," + TaskType.SUBTASK + "," + subTasks.getTitle() + "," + subTasks.getStatus() + ","
-                + subTasks.getDescription() + "," + subTasks.getIdFromEpic();
+                + subTasks.getDescription() + "," + subTasks.getDuration()
+                + "," + subTasks.getStartTime() + ","
+                + subTasks.getIdFromEpic();
     }
 
     @Override
@@ -189,8 +209,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void updateTask(Task tasks) {
+    public byte updateTask(Task tasks) {
         super.updateTask(tasks);
+        return 0;
     }
 
     @Override
@@ -215,8 +236,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void updateEpic(Epic epic) {
+    public Object updateEpic(Epic epic) {
         super.updateEpic(epic);
+        return null;
     }
 
     @Override

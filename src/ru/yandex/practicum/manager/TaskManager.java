@@ -26,7 +26,7 @@ public interface TaskManager {
     void removeTaskId(int id);
 
     //обновление задачи
-    void updateTask(Task task);
+    byte updateTask(Task task);
 
     //создание эпика
     void createEpics(Epic epic);
@@ -35,7 +35,7 @@ public interface TaskManager {
     ArrayList<Epic> getAllEpics();
 
     //обновление эпиков
-    void updateEpic(Epic epic);
+    Object updateEpic(Epic epic);
 
     //удаление эпической задачи по идентификатору
     void removeEpicId(int id);
@@ -78,4 +78,6 @@ public interface TaskManager {
 
     //получение всех подзадач
     HashMap<Integer, SubTasks> getSubtasks();
+
+    Task[] getPrioritizedTasks();
 }

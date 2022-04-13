@@ -16,23 +16,23 @@ public class Main  {
         System.out.println("Время практики");
         System.out.println("Создаем задачу");
 
-        Task test1 = new Task(generateId(), "Научиться учиться", "Яндекс помоги", NEW);
-        Task test2 = new Task(generateId(), "Яндекс помоги", "учиться", NEW);
-        Task test3 = new Task(generateId(), "Научиться", "помоги", NEW);
-        Task test4 = new Task(generateId(), "учиться", "Яндекс ", NEW);
-        Task test5 = new Task(generateId(), "Научиться", "помоги", NEW);
+        Task test1 = new Task(generateId(),"Научиться учиться", "Яндекс помоги", NEW);
+        Task test2 = new Task(generateId(),"Яндекс помоги","учиться", NEW);
+        Task test3 = new Task(generateId(),"Научиться", "помоги", NEW);
+        Task test4 = new Task(generateId(),"учиться", "Яндекс ", NEW);
+        Task test5 = new Task(generateId(),"Научиться", "помоги", NEW);
         managerImpl.createTasks(test1);
         managerImpl.createTasks(test2);
         managerImpl.createTasks(test3);
         managerImpl.createTasks(test4);
         managerImpl.createTasks(test5);
         System.out.println("Обновляем задачу");
-        managerImpl.updateTask(test1 = new Task(test1.getId(), "123учиться", "Яндекс ", NEW));
+        managerImpl.updateTask(test1 = new Task("123учиться", "Яндекс ", NEW));
         managerImpl.getTasks();
 
         printAll();
         System.out.println("Получение задачи по id");
-        System.out.println(managerImpl.getByIdTask(test1.getId()));
+        System.out.println(managerImpl.getByIdTask(test2.getId()));
 
         System.out.println("Удаление задачи по id");
         managerImpl.removeTaskId(test2.getId());
@@ -52,7 +52,7 @@ public class Main  {
 
         printAll();
         System.out.println("Обновление задачи");
-        managerImpl.updateTask(new Task(test1.getId(), "Кодить", "помоги", NEW));
+        managerImpl.updateTask(new Task("Кодить", "помоги", NEW));
         System.out.println(managerImpl.getAllTasks());
 
         printAll();
@@ -106,10 +106,10 @@ public class Main  {
         managerImpl.createSubtask(testSubtask5);
 
         printAll();
-        Task test9 = new Task(generateId(), "Яндекс", "учиться", NEW);
-        Task test10 = new Task(generateId(), "Яндекс", "учиться", NEW);
-        Task test11 = new Task(generateId(), "Яндекс", "учиться", NEW);
-        Task test12 = new Task(generateId(), "Яндекс", "учиться", NEW);
+        Task test9 = new Task(generateId(),"Яндекс", "учиться", NEW);
+        Task test10 = new Task(generateId(),"Яндекс", "учиться", NEW);
+        Task test11 = new Task(generateId(),"Яндекс", "учиться", NEW);
+        Task test12 = new Task(generateId(),"Яндекс", "учиться", NEW);
         managerImpl.createTasks(test9);
         managerImpl.createTasks(test10);
         managerImpl.createTasks(test11);

@@ -7,7 +7,7 @@ import ru.yandex.practicum.manager.TaskManager;
 
 public class Managers {
 
-    private Managers() {
+    public Managers() {
     }
 
     public static TaskManager getDefault(HistoryManager historyManager) {
@@ -17,4 +17,6 @@ public class Managers {
     public static HistoryManager getDefaultHistory() {
         return new InMemoryHistoryManager();
     }
+
+
 }
