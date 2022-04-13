@@ -21,10 +21,14 @@ public class Main  {
 
         Task test1 = new Task(generateId(),"Научиться учиться", "Яндекс помоги", NEW, Duration.ofHours(3),
                 LocalDateTime.of(2022,04,22,12,00));
-        Task test2 = new Task(generateId(),"Яндекс помоги","учиться", NEW);
-        Task test3 = new Task(generateId(),"Научиться", "помоги", NEW);
-        Task test4 = new Task(generateId(),"учиться", "Яндекс ", NEW);
-        Task test5 = new Task(generateId(),"Научиться", "помоги", NEW);
+        Task test2 = new Task(generateId(),"Яндекс помоги","учиться",NEW, Duration.ofHours(3),
+                LocalDateTime.of(2022,04,22,12,00));
+        Task test3 = new Task(generateId(),"Научиться", "помоги", NEW,  Duration.ofHours(3),
+                LocalDateTime.of(2022,04,22,12,00));
+        Task test4 = new Task(generateId(),"учиться", "Яндекс ", NEW,  Duration.ofHours(3),
+                LocalDateTime.of(2022,04,22,12,00));
+        Task test5 = new Task(generateId(),"Научиться", "помоги", NEW,  Duration.ofHours(3),
+                LocalDateTime.of(2022,04,22,12,00));
         managerImpl.createTasks(test1);
         managerImpl.getByIdTask(test2.getId());
         managerImpl.createTasks(test2);
@@ -48,7 +52,8 @@ public class Main  {
         managerImpl.createEpics(test6);
         printAll();
         SubTasks test7 = new SubTasks(generateId(), "Завтра на работу",
-                "А я сижу в 3 утра и пишу код", DONE, test6.getId());
+                "А я сижу в 3 утра и пишу код", DONE,  Duration.ofHours(3),
+                LocalDateTime.of(2022,04,22,12,00), test6.getId());
         managerImpl.createSubtask(test7);
         managerImpl.getBySubTaskId(11);
         managerImpl.getEpics();
@@ -112,7 +117,8 @@ public class Main  {
 
         printAll();
         SubTasks testSubtask5 = new SubTasks(generateId(), "Подзадача", "Добавлена ",
-                DONE, 17);
+                DONE,  Duration.ofHours(3),
+                LocalDateTime.of(2022,04,22,12,00), 17);
         managerImpl.createSubtask(testSubtask5);
 
         printAll();
