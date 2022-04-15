@@ -9,11 +9,9 @@ import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.util.Comparator.*;
 import static ru.yandex.practicum.task.Task.getFormatter;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
@@ -52,6 +50,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         System.out.println(manager.getAllSubtasks());
         manager.getByIdTask(task1.getId());
         manager.getByEpicId(epic1.getId());
+
     }
 
     //метод сохранения

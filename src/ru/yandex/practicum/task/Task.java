@@ -13,6 +13,7 @@ public class Task {
     private LocalDateTime startTime;
     public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy|HH:mm");
 
+
     public Task(Integer id, String title, String description, Status status, Duration duration, LocalDateTime startTime) {
         this.id = id;
         this.title = title;

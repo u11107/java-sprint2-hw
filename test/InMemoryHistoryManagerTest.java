@@ -1,5 +1,3 @@
-package test;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.manager.InMemoryHistoryManager;
@@ -38,9 +36,17 @@ class InMemoryHistoryManagerTest {
 
     @Test
     void shouldRemove() {
+        inMemoryHistoryManager.add(task1);
         inMemoryHistoryManager.add(task2);
+        inMemoryHistoryManager.add(task3);
+        inMemoryHistoryManager.remove(task1.getId());
+        List<Task> history = inMemoryHistoryManager.getHistory();
+        assertEquals(2, history.size(), "История не пустая.");
+        inMemoryHistoryManager.remove(task3.getId());
+        history = inMemoryHistoryManager.getHistory();
+        assertEquals(1, history.size(), "История не пустая.");
         inMemoryHistoryManager.remove(task2.getId());
-        final List<Task> history = inMemoryHistoryManager.getHistory();
+        history = inMemoryHistoryManager.getHistory();
         assertNotNull(history, "История не пустая.");
         assertEquals(0, history.size(), "История не пустая.");
     }

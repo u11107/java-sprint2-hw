@@ -1,5 +1,3 @@
-package test;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,13 +19,8 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
     T managerImpl;
     abstract void setManager();
 
-
-//    private static final TaskManager managerImpl = Managers.getDefault(Managers.getDefaultHistory());
-
-
     @BeforeEach
     void beforeEach() {
-//        managerImpl.clearAll();
         setManager();
     }
 
@@ -92,7 +85,7 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
                         01,01,01,01));
         managerImpl.createTasks(test1);
         managerImpl.removeTaskId(test1.getId());
-        assertFalse(!managerImpl.getAllTasks().isEmpty());
+        assertTrue(managerImpl.getAllTasks().isEmpty());
     }
 
     @Test
@@ -137,7 +130,7 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic(generateId(),"Забрать", "Покупку");
         managerImpl.createEpics(epic);
         managerImpl.removeEpicId(epic.getId());
-        assertFalse(!managerImpl.getAllEpics().isEmpty());
+        assertTrue(managerImpl.getAllEpics().isEmpty());
     }
 
     @Test
@@ -152,7 +145,7 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
         Epic epic = new Epic(generateId(),"Забрать", "Покупку");
         managerImpl.createEpics(epic);
         managerImpl.clearEpic();
-        assertFalse(!managerImpl.getAllEpics().isEmpty());
+        assertTrue(managerImpl.getAllEpics().isEmpty());
     }
 
     @Test
@@ -173,7 +166,6 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
         assertEquals(Duration.ofHours(3),subTasksTest.getDuration(),"Ошибка в duration");
         assertEquals(LocalDateTime.of( 2022,
                 01,01,01,01),subTasksTest.getStartTime(),"Ошибка в LocalTime");
-
     }
 
     @Test
@@ -232,7 +224,7 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
         managerImpl.createEpics(epic);
         managerImpl.createSubtask(subTask);
         managerImpl.removeSubTaskId(subTask.getId());
-        assertFalse(!managerImpl.getAllSubtasks().isEmpty());
+        assertTrue(managerImpl.getAllSubtasks().isEmpty());
     }
 
     @Test
@@ -246,7 +238,6 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
         managerImpl.createSubtask(subTask);
         managerImpl.updateSubtask(new SubTasks(generateId(),"Изучить java", "Сдать проект",
                 Status.NEW, epic.getId()));
-
     }
 
     @Test
@@ -276,8 +267,7 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
                         01,01,01,01), epic.getId());
         managerImpl.createEpics(epic);
         managerImpl.createSubtask(subTask);
-        assertTrue(!managerImpl.getTasks().isEmpty());
-
+        assertFalse(managerImpl.getTasks().isEmpty());
     }
 
     @Test
@@ -293,7 +283,7 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
                         01,01,01,01), epic.getId());
         managerImpl.createEpics(epic);
         managerImpl.createSubtask(subTask);
-        assertTrue(!managerImpl.getEpics().isEmpty());
+        assertFalse(managerImpl.getEpics().isEmpty());
     }
 
     @Test
@@ -308,6 +298,6 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
                 LocalDateTime.of( 2022,
                         01,01,01,01), epic.getId());
         managerImpl.createEpics(epic);managerImpl.createSubtask(subTask);
-        assertTrue(!managerImpl.getSubtasks().isEmpty());
+        assertFalse(managerImpl.getSubtasks().isEmpty());
     }
 }

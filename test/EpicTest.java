@@ -1,11 +1,8 @@
-package test;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.Status;
 import ru.yandex.practicum.task.SubTasks;
-import ru.yandex.practicum.util.Managers;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.yandex.practicum.manager.InMemoryTaskManager.generateId;
