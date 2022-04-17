@@ -45,6 +45,7 @@ public class InMemoryTaskManager implements TaskManager {
         return subtasks;
     }
 
+
     @Override
     public Task[] getPrioritizedTasks() {
         return tasksAndSubtasksByStartTime.toArray(new Task[0]);

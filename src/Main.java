@@ -130,6 +130,10 @@ public class Main {
         System.out.println(managerImpl.getTasks());
         managerImpl.removeTaskId(23);
         System.out.println(managerImpl.getByIdTask(test12.getId()));
+        System.out.println(managerImpl.getAllTasks());
+        System.out.println(managerImpl.getAllEpics());
+        System.out.println(managerImpl.getAllSubtasks());
+        System.out.println(managerImpl.getPrioritizedTasks());
     }
 
     private static void printAll() {

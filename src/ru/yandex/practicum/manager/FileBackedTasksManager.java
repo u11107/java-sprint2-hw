@@ -7,6 +7,7 @@ import ru.yandex.practicum.util.Managers;
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,21 +23,24 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     public static void main(String[] args){
         TaskManager manager = loadFromFile(new File("file24.csv"));
         Task task1 = new Task(generateId(),"Купить билет", "Купить билет на метро", Status.NEW,
-                Duration.ofHours(2), LocalDateTime.of(2022, 01, 1, 0, 0));
+                Duration.ofHours(2), LocalDateTime.of(2022, Month.JANUARY, 1, 1, 0));
         Task task2 = new Task(generateId(),"Купить билет", "Купить билет на метро", Status.NEW,
-                Duration.ofHours(2), LocalDateTime.of(2022, 04, 22, 2, 0));
+                Duration.ofHours(2), LocalDateTime.of(2022, Month.AUGUST, 22, 2, 0));
+        Task task3 = new Task(generateId(),"Купить билет", "Купить билет на метро", Status.NEW,
+                Duration.ofHours(2), LocalDateTime.of(2022, Month.FEBRUARY, 23, 3, 0));
         Epic epic1 = new Epic(generateId(), "Купить подарочную карту", "Зайти в магазин купить " +
                 "три подарочных карты");
         SubTasks sb1 = new SubTasks(generateId(), "Заправить авто", "Помыть авто", Status.NEW,
-                Duration.ofHours(2), LocalDateTime.of(2022, 01, 1, 10, 0),
+                Duration.ofHours(2), LocalDateTime.of(2022, Month.APRIL, 1, 10, 0),
                 epic1.getId());
         SubTasks sb2 = new SubTasks(generateId(), "Заправить авто", "Помыть авто", Status.NEW,
-                Duration.ofHours(2), LocalDateTime.of(2022, 01, 1, 12, 0),
+                Duration.ofHours(2), LocalDateTime.of(2022, Month.FEBRUARY, 1, 12, 0),
                 epic1.getId());
         SubTasks sb3 = new SubTasks(generateId(), "Заправить авто", "Помыть авто", Status.NEW,
-                Duration.ofHours(2), LocalDateTime.of(2022, 01, 1, 10, 0),
+                Duration.ofHours(2), LocalDateTime.of(2022, Month.MAY, 1, 10, 0),
                 epic1.getId());
         manager.createTasks(task2);
+        manager.createTasks(task3);
         manager.createTasks(task1);
         manager.createEpics(epic1);
         manager.createSubtask(sb1);
@@ -47,7 +51,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         System.out.println(manager.getAllSubtasks());
         manager.getByIdTask(task1.getId());
         manager.getByEpicId(epic1.getId());
-
+        manager.getPrioritizedTasks();
+        System.out.println(manager.getPrioritizedTasks());
     }
 
     //метод сохранения
