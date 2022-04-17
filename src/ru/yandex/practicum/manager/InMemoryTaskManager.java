@@ -46,12 +46,12 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     Comparator<Task> comparator = (o1, o2) -> {
-        if (o1.getStartTime() != null && o2.getStartTime() != null) {
-            if (o1.getStartTime().isAfter(o2.getStartTime())) return 1;
-              if (o1.getId().equals(o2.getId())) return 0;
-              else if (o2.getStartTime().isAfter(o1.getStartTime())) return -1;
-            else return 0;
-        } else return 0;
+        if (Objects.equals(o1.getId(), o2.getId())) return 0;
+        if (o1.getStartTime() == null) return 1;
+        if (o2.getStartTime() == null) return -1;
+        if (o1.getStartTime().compareTo(o2.getStartTime()) == 0)
+            return 1;
+        return o1.getStartTime().compareTo(o2.getStartTime());
     };
 
     public ArrayList<Task> getPrioritizedTasks(){
