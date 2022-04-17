@@ -1,8 +1,7 @@
-package ru.yandex.practicum.task;
+package ru.yandex.practicum.manager;
 
 import ru.yandex.practicum.exception.ManagerSaveException;
-import ru.yandex.practicum.manager.InMemoryTaskManager;
-import ru.yandex.practicum.manager.TaskManager;
+import ru.yandex.practicum.task.*;
 import ru.yandex.practicum.util.Managers;
 
 import java.io.*;
@@ -11,8 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static ru.yandex.practicum.task.Task.getFormatter;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private File file;
@@ -144,7 +141,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public static String toStringTask(Task task) {
         return task.getId() + "," + TaskType.TASK + "," + task.getTitle() + "," + task.getStatus() + ","
-                + task.getDescription() + "," + task.getDuration() + "," + task.getStartTime().format(getFormatter());
+                + task.getDescription() + "," + task.getDuration() + "," + task.getStartTime();
     }
 
     public static String toStringEpic(Epic epic) {

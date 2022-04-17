@@ -16,16 +16,6 @@ public class InMemoryTaskManager implements TaskManager {
     protected TreeSet<Task> tasksAndSubtasksByStartTime = new TreeSet<>(Comparator.comparing(Task::getStartTime));
 
 
-
-
-    public TreeSet<Task> getTasksAndSubtasksByStartTime() {
-        return tasksAndSubtasksByStartTime;
-    }
-
-    public void setTasksAndSubtasksByStartTime(TreeSet<Task> tasksAndSubtasksByStartTime) {
-        this.tasksAndSubtasksByStartTime = tasksAndSubtasksByStartTime;
-    }
-
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
         tasks = new HashMap<>();
@@ -57,7 +47,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task[] getPrioritizedTasks() {
-        return new Task[0];
+        return tasksAndSubtasksByStartTime.toArray(new Task[0]);
     }
 
     @Override
@@ -282,8 +272,4 @@ public class InMemoryTaskManager implements TaskManager {
         System.out.println("История просмотров" + historyManager.getHistory());
         return historyManager.getHistory();
     }
-
-
-
-
 }

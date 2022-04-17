@@ -2,7 +2,6 @@ package ru.yandex.practicum.task;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Task {
     private Integer id;
@@ -11,8 +10,6 @@ public class Task {
     private final Status status;
     private Duration duration;
     private LocalDateTime startTime;
-    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy|HH:mm");
-
 
     public Task(Integer id, String title, String description, Status status, Duration duration, LocalDateTime startTime) {
         this.id = id;
@@ -36,12 +33,9 @@ public class Task {
         this.status = status;
     }
 
+
     public Duration getDuration() {
         return duration;
-    }
-
-    public static DateTimeFormatter getFormatter() {
-        return formatter;
     }
 
     public LocalDateTime getStartTime() {

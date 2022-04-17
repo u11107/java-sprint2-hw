@@ -8,14 +8,8 @@ import static ru.yandex.practicum.task.Status.*;
 public class Epic extends Task {
     private ArrayList<SubTasks> subTaskList;
 
-
     public Epic(Integer id, String title, String description) {
         super(id,title, description, null);
-        this.subTaskList = new ArrayList<>();
-    }
-
-    public Epic(Integer id, String title, String description, Status status, LocalDateTime startTime) {
-        super(id, title, description, null, null, null);
         this.subTaskList = new ArrayList<>();
     }
 
@@ -74,7 +68,6 @@ public class Epic extends Task {
         }
         return tmp;
     }
-
 
     @Override
     public String toString() {
