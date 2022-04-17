@@ -13,6 +13,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected final HashMap<Integer, SubTasks> subtasks;
     protected HistoryManager historyManager;
     protected static Integer id = 1;
+    protected Set<Task> listTaskPriorities;
 
     public InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
@@ -44,24 +45,19 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
 
-    Comparator<Task> comparator = new Comparator<Task>() {
-        @Override
-        public int compare(Task o1, Task o2) {
-            if (o1.getStartTime() != null && o2.getStartTime() != null) {
-                if (o1.getStartTime().isAfter(o2.getStartTime())) return 1;
-                else if (o2.getStartTime().isAfter(o1.getStartTime())) return -1;
-                else return 0;
-            } else return 0;
-        }
+    Comparator<Task> comparator = (o1, o2) -> {
+        if (o1.getStartTime() != null && o2.getStartTime() != null) {
+            if (o1.getStartTime().isAfter(o2.getStartTime())) return 1;
+            else if (o2.getStartTime().isAfter(o1.getStartTime())) return -1;
+            else return 0;
+        } else return 0;
     };
 
-    Set<Task> order;
-
     public ArrayList<Task> getPrioritizedTasks(){
-        order = new TreeSet<>(comparator);
-        order.addAll(getAllSubtasks());
-        order.addAll(getAllTasks());
-        return new ArrayList<Task> (order);
+        listTaskPriorities = new TreeSet<>(comparator);
+        listTaskPriorities.addAll(getAllSubtasks());
+        listTaskPriorities.addAll(getAllTasks());
+        return new ArrayList<> (listTaskPriorities);
     }
 
 
