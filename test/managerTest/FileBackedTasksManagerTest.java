@@ -1,4 +1,4 @@
-package model;
+package managerTest;
 
 import org.junit.jupiter.api.AfterEach;
 import ru.yandex.practicum.manager.FileBackedTasksManager;

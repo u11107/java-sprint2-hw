@@ -1,4 +1,4 @@
-package model;
+package managerTest;
 
 import ru.yandex.practicum.manager.InMemoryTaskManager;
 import ru.yandex.practicum.util.Managers;
