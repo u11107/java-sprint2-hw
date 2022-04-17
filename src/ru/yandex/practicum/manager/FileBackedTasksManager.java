@@ -51,7 +51,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         System.out.println(manager.getAllSubtasks());
         manager.getByIdTask(task1.getId());
         manager.getByEpicId(epic1.getId());
-        manager.getPrioritizedTasks();
         System.out.println(manager.getPrioritizedTasks());
     }
 
