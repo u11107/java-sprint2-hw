@@ -7,6 +7,7 @@ import ru.yandex.practicum.task.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
 
@@ -79,5 +80,5 @@ public interface TaskManager {
     //получение всех подзадач
     HashMap<Integer, SubTasks> getSubtasks();
 
-    Task[] getPrioritizedTasks();
+    TreeSet<Task> getPrioritizedTasks();
 }

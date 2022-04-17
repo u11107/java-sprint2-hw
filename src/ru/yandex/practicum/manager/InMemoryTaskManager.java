@@ -47,9 +47,17 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-    public Task[] getPrioritizedTasks() {
-        return tasksAndSubtasksByStartTime.toArray(new Task[0]);
-    }
+    public TreeSet<Task> getPrioritizedTasks() {
+        return tasksAndSubtasksByStartTime;}
+
+    private static Comparator<Task> comparatorTreeSet = (o1, o2) -> {
+        if (o1.getId() == o2.getId()) return 0;
+        if (o1.getStartTime() == null) return 1;
+        if (o2.getStartTime() == null) return -1;
+        if (o1.getStartTime().compareTo(o2.getStartTime()) == 0)
+            return 1;
+        return o1.getStartTime().compareTo(o2.getStartTime());
+    };
 
     @Override
     public ArrayList<Task> getAllTasks() {

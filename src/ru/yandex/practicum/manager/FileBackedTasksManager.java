@@ -132,7 +132,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     break;
                 }
                 fileBackedTasksManager.fromString(line);
-
             }
         } catch(IOException e) {
             try {
