@@ -1,5 +1,6 @@
 package ru.yandex.practicum.manager;
 
+import com.google.gson.JsonElement;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
@@ -23,7 +24,7 @@ public interface TaskManager {
     void clearAll();
 
     //удаление задачи по идентифкатору
-    void removeTaskId(int id);
+    JsonElement removeTaskId(int id);
 
     //обновление задачи
     byte updateTask(Task task);
@@ -38,19 +39,19 @@ public interface TaskManager {
     Object updateEpic(Epic epic);
 
     //удаление эпической задачи по идентификатору
-    void removeEpicId(int id);
+    JsonElement removeEpicId(int id);
 
     //получение эпической задачи по идентификатору
     Epic getByEpicId(int id);
 
     //удаление эпических задач
-    void clearEpic();
+    JsonElement clearEpic();
 
     //создание подзадачи
     void createSubtask(SubTasks subTask);
 
     //удаление всех подзадач
-    void clearAllSubTask();
+    JsonElement clearAllSubTask();
 
     //получение всех подзадач
     ArrayList<SubTasks> getAllSubtasks();
@@ -62,7 +63,7 @@ public interface TaskManager {
     ArrayList<SubTasks> getSubTasksByEpicId(int id);
 
     //удаление позадачи по идентифкатору
-    void removeSubTaskId(int id);
+    JsonElement removeSubTaskId(int id);
 
     //обновление подзадачи
     void updateSubtask(SubTasks SubTasks);

@@ -1,5 +1,6 @@
 package ru.yandex.practicum.manager;
 
+import com.google.gson.JsonElement;
 import ru.yandex.practicum.exception.ManagerSaveException;
 import ru.yandex.practicum.task.*;
 import ru.yandex.practicum.util.Managers;
@@ -15,9 +16,14 @@ import java.util.List;
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private File file;
 
+
     public FileBackedTasksManager(File file) {
         super(Managers.getDefaultHistory());
          this.file = file;
+    }
+
+    public FileBackedTasksManager() {
+        super(Managers.getDefaultHistory());
     }
 
     public static void main(String[] args){
@@ -55,7 +61,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     //метод сохранения
-    private void save() {
+    protected void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))  {
                 writer.write("id,type,title,status,description,epic,duration,startTime" + "\n");
                 for (Task task : getAllTasks()) {
@@ -203,8 +209,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void removeTaskId(int id) {
+    public JsonElement removeTaskId(int id) {
         super.removeTaskId(id);
+        return null;
     }
 
     @Override
@@ -225,13 +232,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void removeEpicId(int id) {
+    public JsonElement removeEpicId(int id) {
         super.removeEpicId(id);
+        return null;
     }
 
     @Override
-    public void clearEpic() {
+    public JsonElement clearEpic() {
         super.clearEpic();
+        return null;
     }
 
     @Override
@@ -254,8 +263,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void clearAllSubTask() {
+    public JsonElement clearAllSubTask() {
         super.clearAllSubTask();
+        return null;
     }
 
     @Override
@@ -271,8 +281,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void removeSubTaskId(int id) {
+    public JsonElement removeSubTaskId(int id) {
         super.removeSubTaskId(id);
+        return null;
     }
 
     @Override

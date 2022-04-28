@@ -1,10 +1,20 @@
+import com.google.gson.Gson;
+import ru.yandex.practicum.api.HttpTaskServer;
+import ru.yandex.practicum.api.KVServer;
 import ru.yandex.practicum.exception.ManagerSaveException;
+import ru.yandex.practicum.manager.HttpTaskManager;
 import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.task.Epic;
+import ru.yandex.practicum.task.Status;
 import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
 import ru.yandex.practicum.util.Managers;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -16,7 +26,7 @@ import static ru.yandex.practicum.task.Status.NEW;
 public class Main {
     private static final TaskManager managerImpl = Managers.getDefault(Managers.getDefaultHistory());
 
-    public static void main(String[] args) throws ManagerSaveException {
+    public static void main(String[] args) throws ManagerSaveException, IOException, InterruptedException {
         System.out.println("Время практики");
         System.out.println("Создаем задачу");
 
@@ -134,6 +144,8 @@ public class Main {
         System.out.println(managerImpl.getAllEpics());
         System.out.println(managerImpl.getAllSubtasks());
         System.out.println(managerImpl.getPrioritizedTasks());
+
+
     }
 
     private static void printAll() {

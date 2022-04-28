@@ -1,5 +1,6 @@
 package ru.yandex.practicum.manager;
 
+import com.google.gson.JsonElement;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
@@ -103,13 +104,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeTaskId(int id) {
+    public JsonElement removeTaskId(int id) {
         if (tasks.get(id) != null) {
             tasks.remove(id);
         } else {
             System.out.println("Нет задачи с таким номером!");
         }
         System.out.println("Задача удалена");
+        return null;
     }
 
     @Override
@@ -138,10 +140,10 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeEpicId(int id) {
+    public JsonElement removeEpicId(int id) {
         if (epics.get(id) == null) {
             System.out.println("Эпика с таким id не существует");
-            return;
+            return null;
         }
         if (!epics.get(id).getSubTaskList().isEmpty()) {
             for (SubTasks i : epics.get(id).getSubTaskList()) {
@@ -151,13 +153,15 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.remove(id);
         epics.remove(id);
         System.out.println("Эпик  удален, с включенными в него подзадачами");
+        return null;
     }
 
     @Override
-    public void clearEpic() {
+    public JsonElement clearEpic() {
         epics.clear();
         subtasks.clear();
         System.out.println("Удалены все эпики и подзадачи");
+        return null;
     }
 
     @Override
@@ -213,13 +217,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void clearAllSubTask() {
+    public JsonElement clearAllSubTask() {
         subtasks.clear();
         for (Epic epic : epics.values()) {
             epic.getSubTaskList().clear();
         }
         System.out.println("Все подзадачи удалены, статус эпика обновлен");
 
+        return null;
     }
 
     @Override
@@ -242,15 +247,16 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void removeSubTaskId(int id) {
+    public JsonElement removeSubTaskId(int id) {
         if (subtasks.get(id) == null) {
             System.out.println("Ошибка, подзадачи с таким id нет!");
-            return;
+            return null;
         }
         SubTasks s = subtasks.remove(id);
         Epic epic = epics.get(s.getIdFromEpic());
         epic.getSubTaskList().remove(s);
         System.out.println("Подзадача удалена");
+        return null;
     }
 
     @Override
