@@ -12,7 +12,7 @@ import java.util.List;
 public interface TaskManager {
 
     //создание задачи
-    void createTasks(Task tasks);
+    short createTasks(Task tasks);
 
     //получение всех задач
     ArrayList<Task> getAllTasks();

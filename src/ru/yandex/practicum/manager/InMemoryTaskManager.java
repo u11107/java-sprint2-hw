@@ -69,13 +69,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void createTasks(Task task) {
+    public short createTasks(Task task) {
         if (task.getId() == null) {
             System.out.println("Ошибка, неверный ID");
-            return;
+            return 0;
         }
         task.setId(generateId());
         this.tasks.put(task.getId(), task);
+        return 0;
     }
 
     @Override
