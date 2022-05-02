@@ -9,6 +9,7 @@ import ru.yandex.practicum.task.Status;
 import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,10 +20,10 @@ import static ru.yandex.practicum.manager.InMemoryTaskManager.generateId;
 
 public abstract  class TaskManagerTest<T extends TaskManager> {
     T managerImpl;
-    abstract void setManager();
+    abstract void setManager() throws IOException, InterruptedException;
 
     @BeforeEach
-    void beforeEach() {
+    void beforeEach() throws IOException, InterruptedException {
         setManager();
     }
 

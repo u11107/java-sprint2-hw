@@ -5,6 +5,7 @@ import ru.yandex.practicum.exception.ManagerSaveException;
 import ru.yandex.practicum.task.*;
 import ru.yandex.practicum.util.Managers;
 
+
 import java.io.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -91,29 +92,28 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
-    private Task fromString(String values) {
-        Task task = null;
+    private void fromString(String values) {
+        Task task;
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
         String[] element = values.split(",".trim());
-        TaskType newType = TaskType.valueOf(element[1].trim());
+        Type newType = Type.valueOf(element[1].trim());
         switch (newType) {
-            case TASK:
-                task= new Task(element[2].trim(), element[4].trim(),
-                Status.valueOf(element[3].trim()));
+            case TASK -> {
+                task = new Task(element[2].trim(), element[4].trim(),
+                        Status.valueOf(element[3].trim()));
                 fileBackedTasksManager.createTasks(task);
-                break;
-            case EPIC:
+            }
+            case EPIC -> {
                 Epic epic = new Epic(Integer.parseInt(element[0].trim()), element[2].trim(), element[4].trim());
                 fileBackedTasksManager.createEpics(epic);
-                break;
-            case SUBTASK:
+            }
+            case SUBTASK -> {
                 SubTasks subTask = new SubTasks(Integer.parseInt(element[0].trim()), element[2].trim(), element[4].trim(),
-                Status.valueOf(element[3].trim()),
+                        Status.valueOf(element[3].trim()),
                         Integer.parseInt(element[5].trim()));
                 fileBackedTasksManager.createSubtask(subTask);
-                break;
+            }
         }
-        return task;
     }
 
     private static FileBackedTasksManager loadFromFile(File file){
@@ -149,17 +149,17 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     public static String toStringTask(Task task) {
-        return task.getId() + "," + TaskType.TASK + "," + task.getTitle() + "," + task.getStatus() + ","
+        return task.getId() + "," + Type.TASK + "," + task.getTitle() + "," + task.getStatus() + ","
                 + task.getDescription() + "," + task.getDuration() + "," + task.getStartTime();
     }
 
     public static String toStringEpic(Epic epic) {
-        return epic.getId() + "," + TaskType.EPIC + ","  + epic.getTitle() + "," + epic.getStatus() + ","
+        return epic.getId() + "," + Type.EPIC + ","  + epic.getTitle() + "," + epic.getStatus() + ","
                 + epic.getDescription() + "," + epic.getEndTime();
     }
 
     public static String toStringSubtask(SubTasks subTasks) {
-        return subTasks.getId() + "," + TaskType.SUBTASK + "," + subTasks.getTitle() + "," + subTasks.getStatus() + ","
+        return subTasks.getId() + "," + Type.SUBTASK + "," + subTasks.getTitle() + "," + subTasks.getStatus() + ","
                 + subTasks.getDescription() + "," + subTasks.getDuration()
                 + "," + subTasks.getStartTime() + ","
                 + subTasks.getIdFromEpic();

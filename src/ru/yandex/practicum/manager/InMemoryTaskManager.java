@@ -45,7 +45,6 @@ public class InMemoryTaskManager implements TaskManager {
         return subtasks;
     }
 
-
     Comparator<Task> comparator = (o1, o2) -> {
         if (Objects.equals(o1.getId(), o2.getId())) return 0;
         if (o1.getStartTime() == null) return 1;

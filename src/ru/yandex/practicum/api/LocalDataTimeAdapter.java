@@ -1,8 +1,6 @@
 package ru.yandex.practicum.api;
 
-
 import com.google.gson.*;
-
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

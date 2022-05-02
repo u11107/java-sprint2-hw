@@ -1,21 +1,13 @@
 package ru.yandex.practicum.manager;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import ru.yandex.practicum.api.DurationAdapter;
 import ru.yandex.practicum.api.KVTaskClient;
 import ru.yandex.practicum.api.LocalDataTimeAdapter;
-import ru.yandex.practicum.exception.ManagerSaveException;
-import ru.yandex.practicum.task.Epic;
-import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -24,7 +24,15 @@ import static ru.yandex.practicum.task.Status.DONE;
 import static ru.yandex.practicum.task.Status.NEW;
 
 public class Main {
-    private static final TaskManager managerImpl = Managers.getDefault(Managers.getDefaultHistory());
+    private static final TaskManager managerImpl;
+
+    static {
+        try {
+            managerImpl = Managers.getDefault(Managers.getDefaultHistory());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) throws ManagerSaveException, IOException, InterruptedException {
         System.out.println("Время практики");

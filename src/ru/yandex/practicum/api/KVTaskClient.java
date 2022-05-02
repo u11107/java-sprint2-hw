@@ -1,7 +1,5 @@
 package ru.yandex.practicum.api;
 
-import ru.yandex.practicum.task.Task;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -27,7 +25,6 @@ public class KVTaskClient {
             throw new IOException("Ошибка регистрации. код ответа " + response.statusCode());
         }
     }
-
 
     public void put(String key, String json) {
         String saveString = String.format("%s/save/%s?API_KEY=%s", url, key, api_key);
@@ -58,10 +55,4 @@ public class KVTaskClient {
         }
         return response;
     }
-
 }
-
-
-
-
-

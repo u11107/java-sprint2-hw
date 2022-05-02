@@ -2,6 +2,7 @@ package ru.yandex.practicum.task;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Task {
     private Integer id;
@@ -75,12 +76,12 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        if (id != null ? !id.equals(task.id) : task.id != null) return false;
-        if (title != null ? !title.equals(task.title) : task.title != null) return false;
-        if (description != null ? !description.equals(task.description) : task.description != null) return false;
+        if (!Objects.equals(id, task.id)) return false;
+        if (!Objects.equals(title, task.title)) return false;
+        if (!Objects.equals(description, task.description)) return false;
         if (status != task.status) return false;
-        if (duration != null ? !duration.equals(task.duration) : task.duration != null) return false;
-        return startTime != null ? startTime.equals(task.startTime) : task.startTime == null;
+        if (!Objects.equals(duration, task.duration)) return false;
+        return Objects.equals(startTime, task.startTime);
     }
 
     @Override
