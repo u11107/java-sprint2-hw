@@ -2,8 +2,6 @@ package ru.yandex.practicum.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
-import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import ru.yandex.practicum.manager.HttpTaskManager;
@@ -50,6 +48,7 @@ public class HttpTaskServer {
                 registerTypeAdapter(Duration.class, new DurationAdapter())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDataTimeAdapter())
                 .create();
+        managerImpl.getPrioritizedTasks();
         System.out.println(gson.toJson(test7));
         System.out.println(gson.toJson(test6));
         System.out.println(gson.toJson(test1));
