@@ -2,6 +2,7 @@ package ru.yandex.practicum.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import ru.yandex.practicum.manager.HttpTaskManager;
@@ -87,6 +88,9 @@ public class HttpTaskServer {
             int statusCode = 200;
             String response = "";
             String query = h.getRequestURI().getQuery();
+            InputStream inputStream = h.getRequestBody();
+            String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
+            Task task = gson.fromJson(body, Task.class);
             switch (method) {
                 case "GET":
                     if (query == null) {
@@ -108,18 +112,19 @@ public class HttpTaskServer {
                     }
                     break;
                 case "POST":
-                    InputStream inputStream = h.getRequestBody();
-                    String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
-                    Task task = gson.fromJson(body, Task.class);
-                    if (managerImpl.getAllTasks().contains(task.getId())) {
-                        managerImpl.updateTask(task);
-                        System.out.println("Обновлена задача № " + task.getId());
-                        response = gson.toJson(task.getId());
-                    } else {
+                    try {
                         managerImpl.createTasks(task);
-                        System.out.println("Создана задача № " + task.getId());
-                        h.sendResponseHeaders(statusCode, 0);
-                        return;
+                        h.sendResponseHeaders(200, 0);
+                    } catch (JsonSyntaxException e) {
+                        h.sendResponseHeaders(403, 0);
+                    }
+                    break;
+                case "PUT":
+                    try {
+                        managerImpl.updateTask(task);
+                        h.sendResponseHeaders(200, 0);
+                    } catch (JsonSyntaxException e) {
+                        h.sendResponseHeaders(403, 0);
                     }
                     break;
                 case "DELETE":
@@ -152,6 +157,9 @@ public class HttpTaskServer {
             int statusCode = 200;
             String response = "";
             String query = h.getRequestURI().getQuery();
+            InputStream inputStream = h.getRequestBody();
+            String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
+            Epic epic = gson.fromJson(body, Epic.class);
             switch (method) {
                 case "GET":
                     if (query == null) {
@@ -173,18 +181,19 @@ public class HttpTaskServer {
                     }
                     break;
                 case "POST":
-                    InputStream inputStream = h.getRequestBody();
-                    String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
-                    Epic epic = gson.fromJson(body, Epic.class);
-                    if (managerImpl.getAllEpics().contains(epic.getId())) {
-                        managerImpl.updateEpic(epic);
-                        System.out.println("Обновлена задача № " + epic.getId());
-                        response = gson.toJson(epic.getId());
-                    } else {
+                    try {
                         managerImpl.createEpics(epic);
-                        System.out.println("Создана задача № " + epic.getId());
-                        h.sendResponseHeaders(statusCode, 0);
-                        return;
+                        h.sendResponseHeaders(200, 0);
+                    } catch (JsonSyntaxException e) {
+                        h.sendResponseHeaders(403, 0);
+                    }
+                    break;
+                case "PUT":
+                    try {
+                        managerImpl.updateEpic(epic);
+                        h.sendResponseHeaders(200, 0);
+                    } catch (JsonSyntaxException e) {
+                        h.sendResponseHeaders(403, 0);
                     }
                     break;
                 case "DELETE":
@@ -216,6 +225,9 @@ public class HttpTaskServer {
             int statusCode = 200;
             String response = "";
             String query = h.getRequestURI().getQuery();
+            InputStream inputStream = h.getRequestBody();
+            String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
+            SubTasks subTasks = gson.fromJson(body, SubTasks.class);
             switch (method) {
                 case "GET":
                     if (query == null) {
@@ -237,18 +249,21 @@ public class HttpTaskServer {
                     }
                     break;
                 case "POST":
-                    InputStream inputStream = h.getRequestBody();
-                    String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
-                    SubTasks subTasks = gson.fromJson(body, SubTasks.class);
-                    if (managerImpl.getAllSubtasks().contains(subTasks.getId())) {
-                        managerImpl.updateSubtask(subTasks);
-                        System.out.println("Обновлена задача № " + subTasks.getId());
-                        response = gson.toJson(subTasks.getId());
-                    } else {
-                        managerImpl.createSubtask(subTasks);
-                        System.out.println("Создана задача № " + subTasks.getId());
-                        h.sendResponseHeaders(statusCode, 0);
-                        return;
+                    try {
+                        SubTasks subTask = gson.fromJson(body, SubTasks.class);
+                        managerImpl.createSubtask(subTask);
+                        h.sendResponseHeaders(200, 0);
+                    } catch (JsonSyntaxException e) {
+                        h.sendResponseHeaders(403, 0);
+                    }
+                    break;
+                case "PUT":
+                    try {
+                        SubTasks subTask = gson.fromJson(body, SubTasks.class);
+                        managerImpl.updateSubtask(subTask);
+                        h.sendResponseHeaders(200, 0);
+                    } catch (JsonSyntaxException e) {
+                        h.sendResponseHeaders(403, 0);
                     }
                     break;
                 case "DELETE":

@@ -10,13 +10,11 @@ import ru.yandex.practicum.api.HttpTaskServer;
 import ru.yandex.practicum.api.KVServer;
 import ru.yandex.practicum.api.LocalDataTimeAdapter;
 
-
 import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.Status;
 import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
-import ru.yandex.practicum.util.Managers;
 
 import java.io.IOException;
 import java.net.URI;
@@ -31,10 +29,9 @@ import java.time.Month;
 public class HTTPTaskServerTest {
     private static KVServer kvServer;
     private static HttpTaskServer server;
-    private static TaskManager manager;
     private final HttpClient client = HttpClient.newHttpClient();
     private final String urlServer = "http://localhost:8080";
-    private final String urlKVServer = "http://localhost:8090";
+    private static TaskManager manager;
     Task task1 = new Task(9, "Научиться учиться", "Яндекс помоги", Status.NEW,
             Duration.ofHours(3),
             LocalDateTime.of(2022, Month.MAY, 22, 12, 0));
@@ -101,7 +98,7 @@ public class HTTPTaskServerTest {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             Assertions.assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
-            System.out.println("Ошибка при запросе на сервер");
+            e.printStackTrace();
         }
     }
 
@@ -211,5 +208,19 @@ public class HTTPTaskServerTest {
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
+    }
+
+    @Override
+    public String toString() {
+        String urlKVServer = "http://localhost:8090";
+        return "HTTPTaskServerTest{" +
+                "client=" + client +
+                ", urlServer='" + urlServer + '\'' +
+                ", urlKVServer='" + urlKVServer + '\'' +
+                ", manager=" + manager +
+                ", task1=" + task1 +
+                ", epic1=" + epic1 +
+                ", sub1=" + sub1 +
+                '}';
     }
 }

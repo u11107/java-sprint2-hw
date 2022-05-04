@@ -2,14 +2,13 @@ package ru.yandex.practicum.manager;
 
 import com.google.gson.JsonElement;
 import ru.yandex.practicum.task.Epic;
-import ru.yandex.practicum.task.Status;
 import ru.yandex.practicum.task.SubTasks;
 import ru.yandex.practicum.task.Task;
 import ru.yandex.practicum.util.Managers;
 import java.util.Comparator;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 public class InMemoryTaskManager implements TaskManager {
     protected final HashMap<Integer, Task> tasks;
@@ -58,15 +57,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     };
 
-    public ArrayList<Task> getPrioritizedTasks(){
+    public  ArrayList<Task> getPrioritizedTasks(){
         listTaskPriorities = new TreeSet<>(comparator);
         listTaskPriorities.addAll(getAllSubtasks());
         listTaskPriorities.addAll(getAllTasks());
         return new ArrayList<> (listTaskPriorities);
-//        List<Task> sort = listTaskPriorities.stream()
-//                .sorted(Comparator.comparing(Task::getId))
-//                .sorted(Comparator.comparing(Task::getStartTime)).toList();
-//        return new ArrayList<>(sort);
     }
 
     @Override
