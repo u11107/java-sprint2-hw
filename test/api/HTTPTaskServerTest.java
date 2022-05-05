@@ -221,7 +221,5 @@ public class HTTPTaskServerTest {
         Subtask subSaved1 = gson.fromJson(jsonArray.get(1), Subtask.class);
         assertEquals(epic1, epicSaved);
         assertEquals(sub1, subSaved1);
-
     }
-
 }
