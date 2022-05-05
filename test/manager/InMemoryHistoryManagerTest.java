@@ -1,16 +1,15 @@
-package managerTest;
+package manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.manager.InMemoryHistoryManager;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.Status;
-import ru.yandex.practicum.task.SubTasks;
+import ru.yandex.practicum.task.Subtask;
 import ru.yandex.practicum.task.Task;
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static ru.yandex.practicum.manager.InMemoryTaskManager.generateId;
 
 class InMemoryHistoryManagerTest {
@@ -20,7 +19,7 @@ class InMemoryHistoryManagerTest {
     private Task task2;
     private Task task3;
     private Epic epic;
-    private SubTasks subTask;
+    private Subtask subTask;
 
     @BeforeEach
     public void createTaskHistoryManager() {
@@ -30,7 +29,7 @@ class InMemoryHistoryManagerTest {
         task2 = new Task(generateId(), "Понять", "Java", Status.NEW);
         task3 = new Task(generateId(), "Простить", "Java", Status.NEW);
         epic = new Epic(generateId(), "java", "Spring");
-        subTask = new SubTasks(generateId(), "Java", "Изучить", Status.NEW);
+        subTask = new Subtask(generateId(), "Java", "Изучить", Status.NEW);
         inMemoryHistoryManager.remove(task1.getId());
 
         inMemoryHistoryManager.remove(task2.getId());

@@ -12,7 +12,12 @@ public class Task {
     private Duration duration;
     private LocalDateTime startTime;
 
-    public Task(Integer id, String title, String description, Status status, Duration duration, LocalDateTime startTime) {
+    public Task(Integer id,
+                String title,
+                String description,
+                Status status,
+                Duration duration,
+                LocalDateTime startTime) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -20,7 +25,6 @@ public class Task {
         this.duration = duration;
         this.startTime = startTime;
     }
-
     public Task(Integer id, String title, String description, Status status) {
         this.id = id;
         this.title = title;
@@ -33,7 +37,6 @@ public class Task {
         this.description = description;
         this.status = status;
     }
-
 
     public Duration getDuration() {
         return duration;

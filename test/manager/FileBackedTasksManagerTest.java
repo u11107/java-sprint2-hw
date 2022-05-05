@@ -1,8 +1,7 @@
-package managerTest;
+package manager;
 
 import org.junit.jupiter.api.AfterEach;
 import ru.yandex.practicum.manager.FileBackedTasksManager;
-
 import java.io.File;
 
 class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager> {

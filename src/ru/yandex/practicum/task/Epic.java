@@ -2,18 +2,19 @@ package ru.yandex.practicum.task;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-import static ru.yandex.practicum.task.Status.*;
+import static ru.yandex.practicum.task.Status.NEW;
+import static ru.yandex.practicum.task.Status.DONE;
+import static ru.yandex.practicum.task.Status.IN_PROGRESS;
 
 public class Epic extends Task {
-    private ArrayList<SubTasks> subTaskList;
+    private final ArrayList<Subtask> subTaskList;
 
     public Epic(Integer id, String title, String description) {
         super(id,title, description, null);
         this.subTaskList = new ArrayList<>();
     }
 
-    public ArrayList<SubTasks> getSubTaskList() {
+    public ArrayList<Subtask> getSubTaskList() {
         return subTaskList;
     }
 
@@ -24,7 +25,7 @@ public class Epic extends Task {
         if (subTaskList.isEmpty()) {
             return NEW;
         } else {
-            for (SubTasks subTasks : subTaskList) {
+            for (Subtask subTasks : subTaskList) {
                 if (subTasks.getStatus() == NEW) {
                     newStatus++;
                 } else if (subTasks.getStatus() == DONE) {

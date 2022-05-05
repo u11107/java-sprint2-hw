@@ -8,11 +8,8 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Постман: https://www.getpostman.com/collections/a83b61d9e1c81c10575c
- */
 public class KVServer {
-    public static final int PORT = 8090;
+    private static final int PORT = 8090;
     private final String API_KEY;
     private HttpServer server;
     private Map<String, String> data = new HashMap<>();
@@ -97,15 +94,14 @@ public class KVServer {
         });
     }
 
-
-
     public void start() {
         System.out.println("Запускаем сервер на порту " + PORT);
         System.out.println("Открой в браузере http://localhost:" + PORT + "/");
         System.out.println("API_KEY: " + API_KEY);
         server.start();
     }
-    public  void  stop() {
+
+    public void stop() {
         server.stop(0);
     }
 
@@ -113,17 +109,16 @@ public class KVServer {
         return "" + System.currentTimeMillis();
     }
 
-    protected boolean hasAuth(HttpExchange h) {
+    private boolean hasAuth(HttpExchange h) {
         String rawQuery = h.getRequestURI().getRawQuery();
         return rawQuery != null && (rawQuery.contains("API_KEY=" + API_KEY) || rawQuery.contains("API_KEY=DEBUG"));
     }
 
-    protected String readText(HttpExchange h) throws IOException {
+    private String readText(HttpExchange h) throws IOException {
         return new String(h.getRequestBody().readAllBytes(), "UTF-8");
     }
 
-    protected void sendText(HttpExchange h, String text) throws IOException {
-        //byte[] resp = jackson.writeValueAsBytes(obj);
+    private void sendText(HttpExchange h, String text) throws IOException {
         byte[] resp = text.getBytes("UTF-8");
         h.getResponseHeaders().add("Content-Type", "application/json");
         h.sendResponseHeaders(200, resp.length);

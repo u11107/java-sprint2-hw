@@ -1,21 +1,20 @@
-package apiTest;
+package api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-
-import org.junit.jupiter.api.*;
-import ru.yandex.practicum.api.DurationAdapter;
-import ru.yandex.practicum.api.HttpTaskServer;
-import ru.yandex.practicum.api.KVServer;
-import ru.yandex.practicum.api.LocalDataTimeAdapter;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import ru.yandex.practicum.api.*;
 import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.Status;
-import ru.yandex.practicum.task.SubTasks;
+import ru.yandex.practicum.task.Subtask;
 import ru.yandex.practicum.task.Task;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -25,18 +24,20 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Month;
 
+import static org.junit.Assert.assertEquals;
 
 public class HTTPTaskServerTest {
     private static KVServer kvServer;
     private static HttpTaskServer server;
+    private static KVTaskClient taskClient;
+    private TaskManager manager;
     private final HttpClient client = HttpClient.newHttpClient();
     private final String urlServer = "http://localhost:8080";
-    private static TaskManager manager;
     Task task1 = new Task(9, "Научиться учиться", "Яндекс помоги", Status.NEW,
             Duration.ofHours(3),
             LocalDateTime.of(2022, Month.MAY, 22, 12, 0));
     Epic epic1 = new Epic(3, "Тест", "Java");
-    SubTasks sub1 = new SubTasks(4, "sub1", "description for sub1",
+    Subtask sub1 = new Subtask(4, "sub1", "description for sub1",
             Status.NEW, Duration.ofHours(4),
             LocalDateTime.of(2022, 5, 5, 8, 0), epic1.getId());
 
@@ -74,153 +75,153 @@ public class HTTPTaskServerTest {
     }
 
     @Test
-    void createTaskTest() {
+    public void createTaskTest() {
         URI url = URI.create(urlServer + "/tasks/task");
         HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(gson.toJson(task1));
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(body).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
             url = URI.create(urlServer + "/tasks/task?id=" + task1.getId());
             request = HttpRequest.newBuilder().uri(url).GET().build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
     }
 
     @Test
-    void deleteTaskTest() {
+    public void deleteTaskTest() {
         URI url = URI.create(urlServer + "/tasks/task?id=9");
         HttpRequest request = HttpRequest.newBuilder().DELETE().uri(url).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    void deleteAllTaskTest() {
+    public void deleteAllTaskTest() {
         URI url = URI.create(urlServer + "/tasks/task");
         HttpRequest request = HttpRequest.newBuilder().DELETE().uri(url).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
     }
 
     @Test
-    void createEpicTest() {
+    public void createEpicTest() {
         URI url = URI.create(urlServer + "/tasks/epic");
         HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(gson.toJson(epic1));
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(body).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
             url = URI.create(urlServer + "/tasks/epic?id=" + epic1.getId());
             request = HttpRequest.newBuilder().uri(url).GET().build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
             Epic epic = gson.fromJson(response.body(),Epic.class);
-            Assertions.assertEquals(epic1, epic);
+            assertEquals(epic1, epic);
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
     }
 
     @Test
-    void deleteEpicTest() {
+    public void deleteEpicTest() {
         URI url = URI.create(urlServer + "/tasks/epic?id=3");
         HttpRequest request = HttpRequest.newBuilder().DELETE().uri(url).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
     }
 
     @Test
-    void deleteAllEpicTest() {
+    public void deleteAllEpicTest() {
         URI url = URI.create(urlServer + "/tasks/epic");
         HttpRequest request = HttpRequest.newBuilder().DELETE().uri(url).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
     }
 
     @Test
-    void createSubTaskTest() {
+    public void createSubTaskTest() {
         URI url = URI.create(urlServer + "/tasks/subTask");
         HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(gson.toJson(sub1));
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(body).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
             url = URI.create(urlServer + "/tasks/subTask?id=" + sub1.getId());
             request = HttpRequest.newBuilder().uri(url).GET().build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
     }
 
     @Test
-    void deleteSubtask() {
+    public void deleteSubtask() {
         URI url = URI.create(urlServer + "/tasks/subTask?id=4");
         HttpRequest request = HttpRequest.newBuilder().DELETE().uri(url).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
     }
 
     @Test
-    void deleteAllSubtask() {
+    public void deleteAllSubtask() {
         URI url = URI.create(urlServer + "/tasks/subTask");
         HttpRequest request = HttpRequest.newBuilder().DELETE().uri(url).build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
     }
 
     @Test
-    void getHistory() {
+    public void getHistory() {
         URI url = URI.create(urlServer + "/tasks/history");
         HttpRequest request = HttpRequest.newBuilder().uri(url).GET().build();
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            Assertions.assertEquals(200, response.statusCode());
+            assertEquals(200, response.statusCode());
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
     }
 
-    @Override
-    public String toString() {
-        String urlKVServer = "http://localhost:8090";
-        return "HTTPTaskServerTest{" +
-                "client=" + client +
-                ", urlServer='" + urlServer + '\'' +
-                ", urlKVServer='" + urlKVServer + '\'' +
-                ", manager=" + manager +
-                ", task1=" + task1 +
-                ", epic1=" + epic1 +
-                ", sub1=" + sub1 +
-                '}';
+    @Test
+    public void saveSubtask() {
+        manager.createEpics(epic1);
+        manager.createSubtask(sub1);
+        String body = taskClient.load("/tasks?API_KEY=DEBUG");
+        JsonArray jsonArray = JsonParser.parseString(body).getAsJsonArray();
+        Epic epicSaved = gson.fromJson(jsonArray.get(0), Epic.class);
+        Subtask subSaved1 = gson.fromJson(jsonArray.get(1), Subtask.class);
+        assertEquals(epic1, epicSaved);
+        assertEquals(sub1, subSaved1);
+
     }
+
 }

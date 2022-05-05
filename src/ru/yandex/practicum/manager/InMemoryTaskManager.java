@@ -2,23 +2,25 @@ package ru.yandex.practicum.manager;
 
 import com.google.gson.JsonElement;
 import ru.yandex.practicum.task.Epic;
-import ru.yandex.practicum.task.SubTasks;
+import ru.yandex.practicum.task.Subtask;
 import ru.yandex.practicum.task.Task;
 import ru.yandex.practicum.util.Managers;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeSet;
 import java.util.Comparator;
-
-import java.util.*;
-
+import java.util.Set;
 
 public class InMemoryTaskManager implements TaskManager {
     protected final HashMap<Integer, Task> tasks;
     protected final HashMap<Integer, Epic> epics;
-    protected final HashMap<Integer, SubTasks> subtasks;
+    protected final HashMap<Integer, Subtask> subtasks;
     protected HistoryManager historyManager;
     protected static Integer id = 1;
-    protected Set<Task> listTaskPriorities;
+    private Set<Task> listTaskPriorities;
 
-    public InMemoryTaskManager(HistoryManager historyManager) {
+    InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
         tasks = new HashMap<>();
         epics = new HashMap<>();
@@ -42,26 +44,17 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public HashMap<Integer, SubTasks> getSubtasks() {
+    public HashMap<Integer, Subtask> getSubtasks() {
         System.out.println("Получение подзадачи");
         return subtasks;
     }
 
-    Comparator<Task> comparator = (o1, o2) -> {
-        if (Objects.equals(o1.getId(), o2.getId())) return 0;
-        if (o1.getStartTime() == null) return 1;
-        if (o2.getStartTime() == null) return -1;
-        if (o1.getStartTime().compareTo(o2.getStartTime()) == 0)
-            return 1;
-        return o1.getStartTime().compareTo(o2.getStartTime());
-
-    };
-
-    public  ArrayList<Task> getPrioritizedTasks(){
-        listTaskPriorities = new TreeSet<>(comparator);
-        listTaskPriorities.addAll(getAllSubtasks());
-        listTaskPriorities.addAll(getAllTasks());
-        return new ArrayList<> (listTaskPriorities);
+    @Override
+    public ArrayList<Task> getPrioritizedTasks() {
+        listTaskPriorities = new TreeSet<>(Comparator.comparing(Task::getId,
+                        Comparator.nullsLast(Comparator.naturalOrder()))
+                .thenComparing(Task::getStartTime));
+        return new ArrayList<>(listTaskPriorities);
     }
 
     @Override
@@ -148,7 +141,7 @@ public class InMemoryTaskManager implements TaskManager {
             return null;
         }
         if (!epics.get(id).getSubTaskList().isEmpty()) {
-            for (SubTasks i : epics.get(id).getSubTaskList()) {
+            for (Subtask i : epics.get(id).getSubTaskList()) {
                 subtasks.remove(i.getId());
             }
         }
@@ -195,7 +188,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void createSubtask(SubTasks subTask) {
+    public void createSubtask(Subtask subTask) {
         if (epics.containsKey(subTask.getIdFromEpic())) {
             subtasks.put(subTask.getId(), subTask);
             addSubTaskEpic(subTask);
@@ -205,7 +198,7 @@ public class InMemoryTaskManager implements TaskManager {
         System.out.println("Подзадача создана и добавлена в эпик");
     }
 
-    private void addSubTaskEpic(SubTasks subTask) {
+    private void addSubTaskEpic(Subtask subTask) {
         if (subtasks.containsKey(subTask.getIdFromEpic())) {
             System.out.println("Ошибка");
             return;
@@ -230,12 +223,12 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<SubTasks> getAllSubtasks() {
+    public ArrayList<Subtask> getAllSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
 
     @Override
-    public SubTasks getBySubTaskId(int id) {
+    public Subtask getBySubTaskId(int id) {
         if (subtasks.containsKey(id)) {
             System.out.println("Subtask найден");
         }
@@ -254,7 +247,7 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Ошибка, подзадачи с таким id нет!");
             return null;
         }
-        SubTasks s = subtasks.remove(id);
+        Subtask s = subtasks.remove(id);
         Epic epic = epics.get(s.getIdFromEpic());
         epic.getSubTaskList().remove(s);
         System.out.println("Подзадача удалена");
@@ -262,7 +255,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateSubtask(SubTasks subtask) {
+    public void updateSubtask(Subtask subtask) {
         if (!epics.containsKey(subtask.getIdFromEpic())) {
             System.out.println("Ошибка. Указанный неверный id эпика.");
             return;
@@ -279,7 +272,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<SubTasks> getSubTasksByEpicId(int id) {
+    public ArrayList<Subtask> getSubTasksByEpicId(int id) {
         if (!epics.containsKey(id)) {
             System.out.println("Ошибка, эпика с таким id не существует");
             return new ArrayList<>();

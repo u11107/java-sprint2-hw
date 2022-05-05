@@ -9,9 +9,8 @@ import ru.yandex.practicum.manager.HttpTaskManager;
 import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.Status;
-import ru.yandex.practicum.task.SubTasks;
+import ru.yandex.practicum.task.Subtask;
 import ru.yandex.practicum.task.Task;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,21 +27,19 @@ public class HttpTaskServer {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     private static TaskManager managerImpl;
 
-    static Gson gson = new GsonBuilder().
+    private static final Gson gson = new GsonBuilder().
             registerTypeAdapter(Duration.class, new DurationAdapter())
             .registerTypeAdapter(LocalDateTime.class, new LocalDataTimeAdapter())
             .create();
 
-
     public static void main(String[] args) throws IOException, InterruptedException {
         new KVServer().start();
         new HttpTaskServer().start();
-
-
-        Task test1 = new Task(1, "Научиться учиться", "Яндекс помоги", Status.NEW, Duration.ofHours(3),
+        Task test1 = new Task(1, "Научиться учиться", "Яндекс помоги",
+                Status.NEW, Duration.ofHours(3),
                 LocalDateTime.of(2022, Month.MAY, 22, 12, 0));
         Epic test6 = new Epic(2, "Тест", "Java");
-        SubTasks test7 = new SubTasks(4, "Завтра на работу",
+        Subtask test7 = new Subtask(4, "Завтра на работу",
                 "А я сижу в 3 утра и пишу код", Status.NEW, Duration.ofHours(3),
                 LocalDateTime.of(2022, Month.MAY, 22, 12, 0), test6.getId());
         Gson gson = new GsonBuilder().
@@ -82,7 +79,7 @@ public class HttpTaskServer {
     }
 
 
-    public HttpHandler TaskHandler = (h) -> {
+    private HttpHandler TaskHandler = (h) -> {
         try (h) {
             String method = h.getRequestMethod();
             int statusCode = 200;
@@ -141,7 +138,7 @@ public class HttpTaskServer {
                     break;
                 default:
                     statusCode = 405;
-                    response = String.format("Передан неизвестный метод %d", method);
+                    response = "Передан неизвестный метод %d";
             }
             h.sendResponseHeaders(statusCode, 0);
             OutputStream os = h.getResponseBody();
@@ -150,8 +147,7 @@ public class HttpTaskServer {
         }
     };
 
-
-    public HttpHandler EpicHandler = (h) -> {
+    private HttpHandler EpicHandler = (h) -> {
         try (h) {
             String method = h.getRequestMethod();
             int statusCode = 200;
@@ -210,7 +206,7 @@ public class HttpTaskServer {
                     break;
                 default:
                     statusCode = 405;
-                    response = String.format("Передан неизвестный метод %d", method);
+                    response = "Передан неизвестный метод %d";
             }
             h.sendResponseHeaders(statusCode, 0);
             OutputStream os = h.getResponseBody();
@@ -219,7 +215,7 @@ public class HttpTaskServer {
         }
     };
 
-    public HttpHandler SubTaskHandler = (h) -> {
+    private HttpHandler SubTaskHandler = (h) -> {
         try (h) {
             String method = h.getRequestMethod();
             int statusCode = 200;
@@ -227,7 +223,7 @@ public class HttpTaskServer {
             String query = h.getRequestURI().getQuery();
             InputStream inputStream = h.getRequestBody();
             String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
-            SubTasks subTasks = gson.fromJson(body, SubTasks.class);
+            Subtask subTasks = gson.fromJson(body, Subtask.class);
             switch (method) {
                 case "GET":
                     if (query == null) {
@@ -250,7 +246,7 @@ public class HttpTaskServer {
                     break;
                 case "POST":
                     try {
-                        SubTasks subTask = gson.fromJson(body, SubTasks.class);
+                        Subtask subTask = gson.fromJson(body, Subtask.class);
                         managerImpl.createSubtask(subTask);
                         h.sendResponseHeaders(200, 0);
                     } catch (JsonSyntaxException e) {
@@ -259,7 +255,7 @@ public class HttpTaskServer {
                     break;
                 case "PUT":
                     try {
-                        SubTasks subTask = gson.fromJson(body, SubTasks.class);
+                        Subtask subTask = gson.fromJson(body, Subtask.class);
                         managerImpl.updateSubtask(subTask);
                         h.sendResponseHeaders(200, 0);
                     } catch (JsonSyntaxException e) {
@@ -280,7 +276,7 @@ public class HttpTaskServer {
                     break;
                 default:
                     statusCode = 405;
-                    response = String.format("Передан неизвестный метод %d", method);
+                    response = "Передан неизвестный метод %d";
             }
             h.sendResponseHeaders(statusCode, 0);
             OutputStream os = h.getResponseBody();
@@ -288,7 +284,8 @@ public class HttpTaskServer {
             os.close();
         }
     };
-    protected final HttpHandler HistoryHandler = (h) -> {
+
+    private final HttpHandler HistoryHandler = (h) -> {
         System.out.println("Обработка запроса клиента /tasks/history");
         try (h) {
             String method = h.getRequestMethod();
@@ -308,7 +305,7 @@ public class HttpTaskServer {
         }
     };
 
-    protected final HttpHandler PrioritizedTasksHandler = (h) -> {
+    private final HttpHandler PrioritizedTasksHandler = (h) -> {
         System.out.println("Обработка запроса клиента /tasks");
         try (h) {
             String method = h.getRequestMethod();
@@ -328,5 +325,3 @@ public class HttpTaskServer {
         }
     };
 }
-
-

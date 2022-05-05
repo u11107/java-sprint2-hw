@@ -12,7 +12,7 @@ public class KVTaskClient {
     private final String api_key;
 
     public KVTaskClient(String url) throws IOException, InterruptedException {
-        this.url = url;
+        this.url = String.valueOf(url);
         URI uri = URI.create(url + "/register");
         HttpRequest request = HttpRequest
                 .newBuilder()

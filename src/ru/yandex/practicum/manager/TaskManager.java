@@ -2,7 +2,7 @@ package ru.yandex.practicum.manager;
 
 import com.google.gson.JsonElement;
 import ru.yandex.practicum.task.Epic;
-import ru.yandex.practicum.task.SubTasks;
+import ru.yandex.practicum.task.Subtask;
 import ru.yandex.practicum.task.Task;
 
 import java.util.ArrayList;
@@ -48,25 +48,25 @@ public interface TaskManager {
     JsonElement clearEpic();
 
     //создание подзадачи
-    void createSubtask(SubTasks subTask);
+    void createSubtask(Subtask subTask);
 
     //удаление всех подзадач
     JsonElement clearAllSubTask();
 
     //получение всех подзадач
-    ArrayList<SubTasks> getAllSubtasks();
+    ArrayList<Subtask> getAllSubtasks();
 
     //получение подзадачи по идентифкатору
-    SubTasks getBySubTaskId(int id);
+    Subtask getBySubTaskId(int id);
 
     //получение подзадач включенных в эпик
-    ArrayList<SubTasks> getSubTasksByEpicId(int id);
+    ArrayList<Subtask> getSubTasksByEpicId(int id);
 
     //удаление позадачи по идентифкатору
     JsonElement removeSubTaskId(int id);
 
     //обновление подзадачи
-    void updateSubtask(SubTasks SubTasks);
+    void updateSubtask(Subtask SubTasks);
 
     //история
     List<Task> history();
@@ -78,7 +78,7 @@ public interface TaskManager {
     HashMap<Integer, Epic> getEpics();
 
     //получение всех подзадач
-    HashMap<Integer, SubTasks> getSubtasks();
+    HashMap<Integer, Subtask> getSubtasks();
 
     ArrayList<Task> getPrioritizedTasks();
 }

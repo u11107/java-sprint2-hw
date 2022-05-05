@@ -1,4 +1,5 @@
 package ru.yandex.practicum.manager;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.yandex.practicum.api.DurationAdapter;
@@ -11,18 +12,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class HttpTaskManager extends FileBackedTasksManager {
     private final KVTaskClient kvTaskClient;
-    Gson gson = new GsonBuilder().
-            registerTypeAdapter(Duration.class, new DurationAdapter())
+    Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Duration.class, new DurationAdapter())
             .registerTypeAdapter(LocalDateTime.class, new LocalDataTimeAdapter())
             .create();
 
     public HttpTaskManager(String url) throws IOException, InterruptedException {
-        kvTaskClient =  new KVTaskClient(url);
+        kvTaskClient = new KVTaskClient(url);
     }
-
 
     @Override
     protected void save() {
@@ -39,6 +38,4 @@ public class HttpTaskManager extends FileBackedTasksManager {
         kvTaskClient.put("/tasks", tasksJson);
         kvTaskClient.put("/history", historyJson);
     }
-
-
 }
