@@ -58,11 +58,9 @@ public class HttpTaskServer {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("++++++++++++++++++++++++++++++");
             System.out.println(response.body());
-            Task task = gson.fromJson(response.body(), Task.class);
         } catch (IOException | InterruptedException e) {
             System.out.println("Ошибка при запросе на сервер");
         }
-
     }
 
     public HttpTaskServer() throws IOException, InterruptedException {
@@ -78,7 +76,6 @@ public class HttpTaskServer {
             System.out.println("Ошибка в пути");
         }
     }
-
 
     public void stop() {
         httpserver.stop(1);
@@ -236,7 +233,6 @@ public class HttpTaskServer {
             String query = h.getRequestURI().getQuery();
             InputStream inputStream = h.getRequestBody();
             String body = new String(inputStream.readAllBytes(), DEFAULT_CHARSET);
-            Subtask subTasks = gson.fromJson(body, Subtask.class);
             switch (method) {
                 case "GET":
                     if (query == null) {
