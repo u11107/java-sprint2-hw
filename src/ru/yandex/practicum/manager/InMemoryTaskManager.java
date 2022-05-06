@@ -1,6 +1,5 @@
 package ru.yandex.practicum.manager;
 
-import com.google.gson.JsonElement;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.Subtask;
 import ru.yandex.practicum.task.Task;
@@ -11,20 +10,25 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.Comparator;
 import java.util.Set;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class InMemoryTaskManager implements TaskManager {
-    protected final HashMap<Integer, Task> tasks;
-    protected final HashMap<Integer, Epic> epics;
-    protected final HashMap<Integer, Subtask> subtasks;
-    protected HistoryManager historyManager;
+    private final HashMap<Integer, Task> tasks;
+    private final HashMap<Integer, Epic> epics;
+    private final HashMap<Integer, Subtask> subtasks;
+    private HistoryManager historyManager;
     protected static Integer id = 1;
-    private Set<Task> listTaskPriorities;
+    private TreeSet<Task> listTaskPriorities;
 
     InMemoryTaskManager(HistoryManager historyManager) {
         this.historyManager = historyManager;
         tasks = new HashMap<>();
         epics = new HashMap<>();
         subtasks = new HashMap<>();
+        listTaskPriorities = new TreeSet<>(Comparator.comparing(Task::getStartTime,
+                Comparator.nullsLast(Comparator.naturalOrder())).thenComparing(Task::getId));
     }
 
     public static Integer generateId() {
@@ -49,12 +53,9 @@ public class InMemoryTaskManager implements TaskManager {
         return subtasks;
     }
 
-    @Override
-    public ArrayList<Task> getPrioritizedTasks() {
-        listTaskPriorities = new TreeSet<>(Comparator.comparing(Task::getId,
-                        Comparator.nullsLast(Comparator.naturalOrder()))
-                .thenComparing(Task::getStartTime));
-        return new ArrayList<>(listTaskPriorities);
+
+    public ArrayList<Task> getPrioritizedTasks(){
+       return new ArrayList<>(listTaskPriorities);
     }
 
     @Override
@@ -63,14 +64,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public short createTasks(Task task) {
+    public void createTasks(Task task) {
         if (task.getId() == null) {
             System.out.println("Ошибка, неверный ID");
-            return 0;
+            return;
         }
         task.setId(generateId());
+        listTaskPriorities.add(task);
         this.tasks.put(task.getId(), task);
-        return 0;
     }
 
     @Override
@@ -92,6 +93,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void clearAll() {
         tasks.clear();
+        listTaskPriorities.clear();
         epics.clear();
         subtasks.clear();
         historyManager = Managers.getDefaultHistory();
@@ -99,20 +101,19 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public JsonElement removeTaskId(int id) {
+    public void removeTaskId(int id) {
         if (tasks.get(id) != null) {
+            listTaskPriorities.remove(tasks.get(id));
             tasks.remove(id);
         } else {
             System.out.println("Нет задачи с таким номером!");
         }
         System.out.println("Задача удалена");
-        return null;
     }
 
     @Override
-    public byte updateTask(Task tasks) {
+    public void updateTask(Task tasks) {
         this.tasks.put(tasks.getId(), tasks);
-        return 0;
     }
 
     @Override
@@ -135,10 +136,10 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public JsonElement removeEpicId(int id) {
+    public void removeEpicId(int id) {
         if (epics.get(id) == null) {
             System.out.println("Эпика с таким id не существует");
-            return null;
+            return;
         }
         if (!epics.get(id).getSubTaskList().isEmpty()) {
             for (Subtask i : epics.get(id).getSubTaskList()) {
@@ -148,15 +149,13 @@ public class InMemoryTaskManager implements TaskManager {
         historyManager.remove(id);
         epics.remove(id);
         System.out.println("Эпик  удален, с включенными в него подзадачами");
-        return null;
     }
 
     @Override
-    public JsonElement clearEpic() {
+    public void clearEpic() {
         epics.clear();
         subtasks.clear();
         System.out.println("Удалены все эпики и подзадачи");
-        return null;
     }
 
     @Override
@@ -192,6 +191,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epics.containsKey(subTask.getIdFromEpic())) {
             subtasks.put(subTask.getId(), subTask);
             addSubTaskEpic(subTask);
+            listTaskPriorities.add(subTask);
             updateSubtask(subTask);
             return;
         }
@@ -212,14 +212,14 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public JsonElement clearAllSubTask() {
+    public void clearAllSubTask() {
+        listTaskPriorities.remove(subtasks);
         subtasks.clear();
         for (Epic epic : epics.values()) {
             epic.getSubTaskList().clear();
         }
         System.out.println("Все подзадачи удалены, статус эпика обновлен");
 
-        return null;
     }
 
     @Override
@@ -242,16 +242,16 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public JsonElement removeSubTaskId(int id) {
+    public void removeSubTaskId(int id) {
         if (subtasks.get(id) == null) {
             System.out.println("Ошибка, подзадачи с таким id нет!");
-            return null;
+            return;
         }
         Subtask s = subtasks.remove(id);
+        listTaskPriorities.remove(s);
         Epic epic = epics.get(s.getIdFromEpic());
         epic.getSubTaskList().remove(s);
         System.out.println("Подзадача удалена");
-        return null;
     }
 
     @Override

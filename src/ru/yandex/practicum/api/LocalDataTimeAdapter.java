@@ -25,6 +25,7 @@ public class LocalDataTimeAdapter implements JsonSerializer<LocalDateTime>, Json
     public LocalDateTime deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext
             jsonDeserializationContext) throws JsonParseException {
         return LocalDateTime
-                .parse(jsonElement.getAsJsonObject().get("Date").getAsString(), DateTimeFormatter.ofPattern("dd.MM.yyyy|HH:mm"));
+                .parse(jsonElement.getAsJsonObject()
+                        .get("Date").getAsString(), DateTimeFormatter.ofPattern("dd.MM.yyyy|HH:mm"));
     }
 }

@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -38,18 +42,38 @@ public class HttpTaskServer {
         Task test1 = new Task(1, "Научиться учиться", "Яндекс помоги",
                 Status.NEW, Duration.ofHours(3),
                 LocalDateTime.of(2022, Month.MAY, 22, 12, 0));
-        Epic test6 = new Epic(2, "Тест", "Java");
-        Subtask test7 = new Subtask(4, "Завтра на работу",
-                "А я сижу в 3 утра и пишу код", Status.NEW, Duration.ofHours(3),
-                LocalDateTime.of(2022, Month.MAY, 22, 12, 0), test6.getId());
-        Gson gson = new GsonBuilder().
-                registerTypeAdapter(Duration.class, new DurationAdapter())
-                .registerTypeAdapter(LocalDateTime.class, new LocalDataTimeAdapter())
-                .create();
-        managerImpl.getPrioritizedTasks();
-        System.out.println(gson.toJson(test7));
-        System.out.println(gson.toJson(test6));
-        System.out.println(gson.toJson(test1));
+//        Epic test6 = new Epic(2, "Тест", "Java");
+//        Subtask test7 = new Subtask(4, "Завтра на работу",
+//                "А я сижу в 3 утра и пишу код", Status.NEW, Duration.ofHours(3),
+//                LocalDateTime.of(2022, Month.MAY, 22, 12, 0), test6.getId());
+//        Gson gson = new GsonBuilder().
+//                registerTypeAdapter(Duration.class, new DurationAdapter())
+//                .registerTypeAdapter(LocalDateTime.class, new LocalDataTimeAdapter())
+//                .create();
+//        managerImpl.getPrioritizedTasks();
+//        System.out.println(gson.toJson(test7));
+//        System.out.println(gson.toJson(test6));
+//        System.out.println(gson.toJson(test1));
+
+        HttpClient client = HttpClient.newHttpClient();
+        String urlServer = "http://localhost:8080";
+
+        URI url = URI.create(urlServer + "/tasks/task");
+        HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(gson.toJson(test1));
+        HttpRequest request = HttpRequest.newBuilder().uri(url).POST(body).build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            url = URI.create(urlServer + "/tasks/task?id=" + test1.getId());
+            request = HttpRequest.newBuilder().uri(url).GET().build();
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("++++++++++++++++++++++++++++++");
+            System.out.println(response.body());
+            Task task = gson.fromJson(response.body(), Task.class);
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Ошибка при запросе на сервер");
+        }
+
     }
 
     public HttpTaskServer() throws IOException, InterruptedException {

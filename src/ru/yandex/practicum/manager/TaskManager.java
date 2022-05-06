@@ -1,6 +1,5 @@
 package ru.yandex.practicum.manager;
 
-import com.google.gson.JsonElement;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.Subtask;
 import ru.yandex.practicum.task.Task;
@@ -12,7 +11,7 @@ import java.util.List;
 public interface TaskManager {
 
     //создание задачи
-    short createTasks(Task tasks);
+    void createTasks(Task tasks);
 
     //получение всех задач
     ArrayList<Task> getAllTasks();
@@ -24,10 +23,10 @@ public interface TaskManager {
     void clearAll();
 
     //удаление задачи по идентифкатору
-    JsonElement removeTaskId(int id);
+    void removeTaskId(int id);
 
     //обновление задачи
-    byte updateTask(Task task);
+    void updateTask(Task task);
 
     //создание эпика
     void createEpics(Epic epic);
@@ -39,19 +38,19 @@ public interface TaskManager {
     Object updateEpic(Epic epic);
 
     //удаление эпической задачи по идентификатору
-    JsonElement removeEpicId(int id);
+    void removeEpicId(int id);
 
     //получение эпической задачи по идентификатору
     Epic getByEpicId(int id);
 
     //удаление эпических задач
-    JsonElement clearEpic();
+    void clearEpic();
 
     //создание подзадачи
     void createSubtask(Subtask subTask);
 
     //удаление всех подзадач
-    JsonElement clearAllSubTask();
+    void clearAllSubTask();
 
     //получение всех подзадач
     ArrayList<Subtask> getAllSubtasks();
@@ -63,7 +62,7 @@ public interface TaskManager {
     ArrayList<Subtask> getSubTasksByEpicId(int id);
 
     //удаление позадачи по идентифкатору
-    JsonElement removeSubTaskId(int id);
+    void removeSubTaskId(int id);
 
     //обновление подзадачи
     void updateSubtask(Subtask SubTasks);
@@ -80,5 +79,6 @@ public interface TaskManager {
     //получение всех подзадач
     HashMap<Integer, Subtask> getSubtasks();
 
+    //получение задач по приоритету
     ArrayList<Task> getPrioritizedTasks();
 }

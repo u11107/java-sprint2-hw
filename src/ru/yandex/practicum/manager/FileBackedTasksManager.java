@@ -1,6 +1,5 @@
 package ru.yandex.practicum.manager;
 
-import com.google.gson.JsonElement;
 import ru.yandex.practicum.exception.ManagerSaveException;
 import ru.yandex.practicum.task.*;
 import ru.yandex.practicum.util.Managers;
@@ -91,7 +90,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     private void fromString(String values) {
-        Task task = null;
+        Task task;
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager(file);
         String[] element = values.split(",".trim());
         Type newType = Type.valueOf(element[1].trim());
@@ -204,10 +203,9 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public short createTasks(Task task) {
+    public void createTasks(Task task) {
         super.createTasks(task);
         save();
-        return 0;
     }
 
     @Override
@@ -223,15 +221,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public JsonElement removeTaskId(int id) {
+    public void removeTaskId(int id) {
         super.removeTaskId(id);
-        return null;
     }
 
     @Override
-    public byte updateTask(Task tasks) {
+    public void updateTask(Task tasks) {
         super.updateTask(tasks);
-        return 0;
     }
 
     @Override
@@ -246,15 +242,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public JsonElement removeEpicId(int id) {
+    public void removeEpicId(int id) {
         super.removeEpicId(id);
-        return null;
     }
 
     @Override
-    public JsonElement clearEpic() {
+    public void clearEpic() {
         super.clearEpic();
-        return null;
     }
 
     @Override
@@ -277,9 +271,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public JsonElement clearAllSubTask() {
+    public void clearAllSubTask() {
         super.clearAllSubTask();
-        return null;
     }
 
     @Override
@@ -295,9 +288,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public JsonElement removeSubTaskId(int id) {
+    public void removeSubTaskId(int id) {
         super.removeSubTaskId(id);
-        return null;
     }
 
     @Override
