@@ -19,7 +19,8 @@ public class Main {
         managerImpl = Managers.getDefault();
     }
 
-    public static void main(String[] args) throws ManagerSaveException, IOException, InterruptedException {
+    public static void main(String[] args) throws ManagerSaveException{
+
         System.out.println("Время практики");
         System.out.println("Создаем задачу");
 

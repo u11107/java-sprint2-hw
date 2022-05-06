@@ -1,10 +1,8 @@
 package ru.yandex.practicum.util;
 
 import ru.yandex.practicum.api.KVServer;
-import ru.yandex.practicum.manager.InMemoryHistoryManager;
 import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.manager.HttpTaskManager;
-import ru.yandex.practicum.manager.HistoryManager;
 import java.io.IOException;
 
 public class Managers {
@@ -17,13 +15,8 @@ public class Managers {
         }
     }
 
-    public static HistoryManager getDefaultHistory() {
-        return new InMemoryHistoryManager();
-    }
-
-    public static KVServer getDefaultKVServer() throws IOException {
+    public static void getDefaultKVServer() throws IOException {
         final KVServer kvServer = new KVServer();
         kvServer.start();
-        return kvServer;
     }
 }

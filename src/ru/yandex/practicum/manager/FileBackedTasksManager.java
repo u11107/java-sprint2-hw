@@ -1,10 +1,17 @@
 package ru.yandex.practicum.manager;
 
 import ru.yandex.practicum.exception.ManagerSaveException;
-import ru.yandex.practicum.task.*;
-import ru.yandex.practicum.util.Managers;
-
-import java.io.*;
+import ru.yandex.practicum.task.Task;
+import ru.yandex.practicum.task.Epic;
+import ru.yandex.practicum.task.Subtask;
+import ru.yandex.practicum.task.Status;
+import ru.yandex.practicum.task.Type;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -16,12 +23,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     private File file;
 
     public FileBackedTasksManager(File file) {
-        super(Managers.getDefaultHistory());
+        super();
         this.file = file;
     }
 
     FileBackedTasksManager() {
-        super(Managers.getDefaultHistory());
+        super();
     }
 
     public static void main(String[] args) {
@@ -56,6 +63,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         manager.getByIdTask(task1.getId());
         manager.getByEpicId(epic1.getId());
         System.out.println(manager.getPrioritizedTasks());
+
     }
 
     //метод сохранения

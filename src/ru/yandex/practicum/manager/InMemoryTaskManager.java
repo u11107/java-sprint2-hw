@@ -3,30 +3,22 @@ package ru.yandex.practicum.manager;
 import ru.yandex.practicum.task.Epic;
 import ru.yandex.practicum.task.Subtask;
 import ru.yandex.practicum.task.Task;
-import ru.yandex.practicum.util.Managers;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks;
     private final HashMap<Integer, Epic> epics;
     private final HashMap<Integer, Subtask> subtasks;
-    private HistoryManager historyManager;
+    private final HistoryManager historyManager;
     protected static Integer id = 1;
-    private TreeSet<Task> listTaskPriorities;
+    private final TreeSet<Task> listTaskPriorities;
 
-    InMemoryTaskManager(HistoryManager historyManager) {
-        this.historyManager = historyManager;
+    public InMemoryTaskManager() {
         tasks = new HashMap<>();
         epics = new HashMap<>();
         subtasks = new HashMap<>();
+        historyManager = new InMemoryHistoryManager();
         listTaskPriorities = new TreeSet<>(Comparator.comparing(Task::getStartTime,
                 Comparator.nullsLast(Comparator.naturalOrder())).thenComparing(Task::getId));
     }
@@ -96,7 +88,7 @@ public class InMemoryTaskManager implements TaskManager {
         listTaskPriorities.clear();
         epics.clear();
         subtasks.clear();
-        historyManager = Managers.getDefaultHistory();
+        history().clear();
         System.out.println("Все задачи удалены");
     }
 

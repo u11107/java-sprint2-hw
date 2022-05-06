@@ -174,7 +174,8 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
         Epic epic1 = new Epic(generateId(),"Забрать", "Покупку");
         managerImpl.createEpics(epic1);
         Subtask subTask = new Subtask(generateId(),"Изучить java", "Сдать проект",
-                Status.NEW, Duration.ofHours(2), LocalDateTime.of(2022, 1, 1, 10, 0), epic1.getId());
+                Status.NEW, Duration.ofHours(2), LocalDateTime.of(2022, 1, 1, 10, 0),
+                epic1.getId());
         managerImpl.createSubtask(subTask);
         managerImpl.clearAll();
         Assertions.assertTrue(managerImpl.getAllSubtasks().isEmpty());
@@ -210,7 +211,8 @@ public abstract  class TaskManagerTest<T extends TaskManager> {
         Epic epic1 = new Epic(generateId(),"Забрать", "Покупку");
         managerImpl.createEpics(epic1);
         Subtask subTask1 = new Subtask(generateId(),"Изучить java", "Сдать проект",
-                Status.NEW,  Duration.ofHours(2),  LocalDateTime.of(2022, 1, 1, 10, 0), epic1.getId());
+                Status.NEW,  Duration.ofHours(2),  LocalDateTime.of(2022, 1, 1, 10, 0),
+                epic1.getId());
         managerImpl.createSubtask(subTask1);
         assertEquals(List.of(subTask1), managerImpl.getSubTasksByEpicId(epic1.getId()));
     }

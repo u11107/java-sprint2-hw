@@ -42,18 +42,6 @@ public class HttpTaskServer {
         Task test1 = new Task(1, "Научиться учиться", "Яндекс помоги",
                 Status.NEW, Duration.ofHours(3),
                 LocalDateTime.of(2022, Month.MAY, 22, 12, 0));
-//        Epic test6 = new Epic(2, "Тест", "Java");
-//        Subtask test7 = new Subtask(4, "Завтра на работу",
-//                "А я сижу в 3 утра и пишу код", Status.NEW, Duration.ofHours(3),
-//                LocalDateTime.of(2022, Month.MAY, 22, 12, 0), test6.getId());
-//        Gson gson = new GsonBuilder().
-//                registerTypeAdapter(Duration.class, new DurationAdapter())
-//                .registerTypeAdapter(LocalDateTime.class, new LocalDataTimeAdapter())
-//                .create();
-//        managerImpl.getPrioritizedTasks();
-//        System.out.println(gson.toJson(test7));
-//        System.out.println(gson.toJson(test6));
-//        System.out.println(gson.toJson(test1));
 
         HttpClient client = HttpClient.newHttpClient();
         String urlServer = "http://localhost:8080";
@@ -63,7 +51,8 @@ public class HttpTaskServer {
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(body).build();
 
         try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response;
             url = URI.create(urlServer + "/tasks/task?id=" + test1.getId());
             request = HttpRequest.newBuilder().uri(url).GET().build();
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
